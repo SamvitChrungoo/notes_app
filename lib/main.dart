@@ -22,6 +22,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // HiveDataProvider _hiveDataProvider;
+  // Uuid _uniqueId;
+
+  @override
+  void initState() {
+    // _hiveDataProvider = HiveDataProvider();
+    // _uniqueId = Uuid();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
