@@ -42,3 +42,6 @@ flutter:
           weight: 600
         - asset: assets/fonts/Quicksand-Regular.ttf
           weight: 500
+    - family: NotesIcons
+      fonts:
+        - asset: assets/fonts/NotesIcons.ttf

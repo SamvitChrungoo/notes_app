@@ -1,0 +1,22 @@
+{
+  "name": "NotesIcons",
+  "css_prefix_text": "",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "e45e9f27ce40ba9837cc984076d98067",
+      "css": "noteSearch",
+      "code": 59395,
+      "src": "elusive"
+    },
+    {
+      "uid": "62b0580ee8edc3a3edfbf68a47c852d5",
+      "css": "noteEdit",
+      "code": 59392,
+      "src": "elusive"
+    }
+  ]
+}
