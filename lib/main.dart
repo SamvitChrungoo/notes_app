@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/utils/size_config.dart';
-import 'constants/constant_colors.dart';
+import 'package:flutter/services.dart';
+import 'package:notes_app/notes_home_page.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarBrightness: Brightness.dark));
   runApp(MyApp());
 }
 
@@ -10,33 +12,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(fontFamily: 'Quicksand'),
-      home: HomePage(),
+      debugShowCheckedModeBanner: false,
+      home: NotesHomePage(),
     );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  // HiveDataProvider _hiveDataProvider;
-  // Uuid _uniqueId;
-
-  @override
-  void initState() {
-    // _hiveDataProvider = HiveDataProvider();
-    // _uniqueId = Uuid();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    SizeConfig().init(context);
-    return Scaffold(
-        backgroundColor: kStickyNotesLime,
-        body: Center(child: Text('Hello There !!!')));
   }
 }

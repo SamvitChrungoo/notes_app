@@ -7,16 +7,58 @@
   "ascent": 850,
   "glyphs": [
     {
-      "uid": "e45e9f27ce40ba9837cc984076d98067",
-      "css": "noteSearch",
-      "code": 59395,
-      "src": "elusive"
+      "uid": "f4445feb55521283572ee88bc304f928",
+      "css": "noteSave",
+      "code": 59392,
+      "src": "fontawesome"
     },
     {
-      "uid": "62b0580ee8edc3a3edfbf68a47c852d5",
+      "uid": "9dd9e835aebe1060ba7190ad2b2ed951",
+      "css": "noteSearch",
+      "code": 59393,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "41087bc74d4b20b55059c60a33bf4008",
       "css": "noteEdit",
-      "code": 59392,
-      "src": "elusive"
+      "code": 59394,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "f48ae54adfb27d8ada53d0fd9e34ee10",
+      "css": "noteDelete",
+      "code": 59395,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "4aad6bb50b02c18508aae9cbe14e784e",
+      "css": "noteShare",
+      "code": 61920,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "555ef8c86832e686fef85f7af2eb7cde",
+      "css": "noteBack",
+      "code": 59396,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "ca90da02d2c6a3183f2458e4dc416285",
+      "css": "noteTheme",
+      "code": 59397,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "d17030afaecc1e1c22349b99f3c4992a",
+      "css": "noteStarHollow",
+      "code": 59398,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "474656633f79ea2f1dad59ff63f6bf07",
+      "css": "noteStarFilled",
+      "code": 59399,
+      "src": "fontawesome"
     }
   ]
 }
