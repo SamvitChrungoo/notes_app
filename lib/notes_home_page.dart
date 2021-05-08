@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:notes_app/constants/constants.dart';
 import 'package:notes_app/constants/icons/notes_icons.dart';
@@ -18,11 +19,33 @@ class NotesHomePage extends StatefulWidget {
 class _NotesHomePageState extends State<NotesHomePage> {
   HiveDataProvider _hiveDataProvider;
   Uuid _uniqueId;
-
+  ScrollController _scrollController;
+  bool _showAppbar = true;
+  bool isScrollingDown = false;
   @override
   void initState() {
     _hiveDataProvider = HiveDataProvider();
     _uniqueId = Uuid();
+    _scrollController = ScrollController();
+    _scrollController = new ScrollController();
+    _scrollController.addListener(() {
+      if (_scrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        if (!isScrollingDown) {
+          isScrollingDown = true;
+          _showAppbar = false;
+          setState(() {});
+        }
+      }
+      if (_scrollController.position.userScrollDirection ==
+          ScrollDirection.forward) {
+        if (isScrollingDown) {
+          isScrollingDown = false;
+          _showAppbar = true;
+          setState(() {});
+        }
+      }
+    });
     super.initState();
   }
 
@@ -48,22 +71,28 @@ class _NotesHomePageState extends State<NotesHomePage> {
                 padding: EdgeInsets.symmetric(horizontal: 20.toWidth),
                 child: Column(
                   children: [
-                    SizedBox(height: 10.toHeight),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Notes',
-                            style: kNotesDefaultHeadingStyle.copyWith(
-                                fontSize: 34)),
-                        NotesButton(
-                            onTap: () => null,
-                            icon: Icon(NotesIcons.noteSearch,
-                                color: kTextColor, size: 18.toFont)),
-                      ],
+                    AnimatedContainer(
+                      height: _showAppbar ? 60.toHeight : 0,
+                      duration: Duration(milliseconds: 200),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Notes',
+                              style: kNotesDefaultHeadingStyle.copyWith(
+                                  fontSize: 34)),
+                          NotesButton(
+                              onTap: () => null,
+                              icon: _showAppbar
+                                  ? Icon(NotesIcons.noteSearch,
+                                      color: kTextColor, size: 18.toFont)
+                                  : null),
+                        ],
+                      ),
                     ),
                     SizedBox(height: 10.toHeight),
                     Expanded(
                       child: StaggeredGridView.count(
+                        controller: _scrollController,
                         crossAxisCount: 4,
                         staggeredTiles:
                             List.generate(15, (index) => getTileShape(index)),
