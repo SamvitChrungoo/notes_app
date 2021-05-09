@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:focused_menu/focused_menu.dart';
+import 'package:focused_menu/modals.dart';
+import 'package:notes_app/add_new_note_page.dart';
 import 'package:notes_app/constants/constants.dart';
 import 'package:notes_app/constants/icons/notes_icons.dart';
 import 'package:notes_app/hive_db.dart';
@@ -58,8 +61,8 @@ class _NotesHomePageState extends State<NotesHomePage> {
     return Scaffold(
       backgroundColor: kBackgroungColor,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => NotesOpenPage())),
+        onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (BuildContext context) => AddNewNote())),
         backgroundColor: kButtonColor,
         elevation: 20,
         child: Icon(Icons.add, size: 30.toFont),
@@ -93,7 +96,7 @@ class _NotesHomePageState extends State<NotesHomePage> {
                       ),
                     ),
                     SizedBox(height: 10.toHeight),
-                    (!notesAvailable)
+                    (notesAvailable)
                         ? NoNotesAvailable()
                         : Expanded(
                             child: StaggeredGridView.count(
@@ -101,15 +104,74 @@ class _NotesHomePageState extends State<NotesHomePage> {
                               crossAxisCount: 4,
                               staggeredTiles: List.generate(
                                   15, (index) => getTileShape(index)),
-                              mainAxisSpacing: 13.toHeight,
-                              crossAxisSpacing: 13.toWidth,
+                              mainAxisSpacing: 12.toHeight,
+                              crossAxisSpacing: 12.toWidth,
                               children: List.generate(
                                   15,
-                                  (index) => Container(
-                                      decoration: BoxDecoration(
-                                          color: getColor(index),
+                                  (index) => FocusedMenuHolder(
+                                        onPressed: () => Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        NotesOpenPage())),
+                                        menuItems: <FocusedMenuItem>[
+                                          FocusedMenuItem(
+                                              backgroundColor: kBackgroungColor
+                                                  .withOpacity(0.8),
+                                              title: Text("Edit",
+                                                  style:
+                                                      kNotesDefaultTextStyle),
+                                              trailingIcon: Icon(
+                                                NotesIcons.noteEdit,
+                                                color: kTextColor,
+                                              ),
+                                              onPressed: () => Navigator.of(
+                                                      context)
+                                                  .push(MaterialPageRoute(
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          NotesOpenPage()))),
+                                          FocusedMenuItem(
+                                              backgroundColor: kBackgroungColor
+                                                  .withOpacity(0.8),
+                                              title: Text("Share",
+                                                  style:
+                                                      kNotesDefaultTextStyle),
+                                              trailingIcon: Icon(
+                                                NotesIcons.noteShare,
+                                                color: kTextColor,
+                                              ),
+                                              onPressed: () {}),
+                                          FocusedMenuItem(
+                                              backgroundColor: Colors.redAccent
+                                                  .withOpacity(0.8),
+                                              title: Text("Delete",
+                                                  style:
+                                                      kNotesDefaultTextStyle),
+                                              trailingIcon: Icon(
+                                                NotesIcons.noteDelete,
+                                                color: kTextColor,
+                                              ),
+                                              onPressed: () {}),
+                                        ],
+                                        blurSize: 4,
+                                        menuBoxDecoration: BoxDecoration(
                                           borderRadius: BorderRadius.all(
-                                              Radius.circular(12))))),
+                                              Radius.circular(10)),
+                                          color:
+                                              kBackgroungColor.withOpacity(0.8),
+                                        ),
+                                        menuItemExtent: 50.toHeight,
+                                        duration: Duration(milliseconds: 400),
+                                        menuOffset: 10.toHeight,
+                                        animateMenuItems: false,
+                                        menuWidth: SizeConfig().screenWidth / 2,
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                                color: getColor(index),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(12)))),
+                                      )),
                             ),
                           )
                   ],
