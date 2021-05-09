@@ -7,6 +7,7 @@ import 'package:notes_app/hive_db.dart';
 import 'package:notes_app/notes_button.dart';
 import 'package:notes_app/notes_open_page.dart';
 import 'package:notes_app/utils/helpers.dart';
+import 'package:notes_app/no_notes_available.dart';
 import 'package:notes_app/utils/size_config.dart';
 import 'package:uuid/uuid.dart';
 import 'constants/constant_colors.dart';
@@ -22,6 +23,8 @@ class _NotesHomePageState extends State<NotesHomePage> {
   ScrollController _scrollController;
   bool _showAppbar = true;
   bool isScrollingDown = false;
+  bool notesAvailable = false;
+
   @override
   void initState() {
     _hiveDataProvider = HiveDataProvider();
@@ -90,23 +93,25 @@ class _NotesHomePageState extends State<NotesHomePage> {
                       ),
                     ),
                     SizedBox(height: 10.toHeight),
-                    Expanded(
-                      child: StaggeredGridView.count(
-                        controller: _scrollController,
-                        crossAxisCount: 4,
-                        staggeredTiles:
-                            List.generate(15, (index) => getTileShape(index)),
-                        mainAxisSpacing: 13.toHeight,
-                        crossAxisSpacing: 13.toWidth,
-                        children: List.generate(
-                            15,
-                            (index) => Container(
-                                decoration: BoxDecoration(
-                                    color: getColor(index),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12))))),
-                      ),
-                    )
+                    (!notesAvailable)
+                        ? NoNotesAvailable()
+                        : Expanded(
+                            child: StaggeredGridView.count(
+                              controller: _scrollController,
+                              crossAxisCount: 4,
+                              staggeredTiles: List.generate(
+                                  15, (index) => getTileShape(index)),
+                              mainAxisSpacing: 13.toHeight,
+                              crossAxisSpacing: 13.toWidth,
+                              children: List.generate(
+                                  15,
+                                  (index) => Container(
+                                      decoration: BoxDecoration(
+                                          color: getColor(index),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12))))),
+                            ),
+                          )
                   ],
                 ),
               ))),
