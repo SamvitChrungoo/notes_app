@@ -43,14 +43,16 @@ class _AddNewNoteState extends State<AddNewNote> {
           child: SafeArea(
               child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.toWidth),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: ListView(
               children: [
                 SizedBox(height: 10.toHeight),
-                NotesButton(
-                    onTap: () => Navigator.of(context).pop(),
-                    icon: Icon(NotesIcons.noteBack,
-                        color: kTextColor, size: 18.toFont)),
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: NotesButton(
+                      onTap: () => Navigator.of(context).pop(),
+                      icon: Icon(NotesIcons.noteBack,
+                          color: kTextColor, size: 18.toFont)),
+                ),
                 SizedBox(height: 10.toHeight),
                 TextField(
                   onChanged: (value) => setState(() {}),
