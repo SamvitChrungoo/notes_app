@@ -3,18 +3,18 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
-import 'package:notes_app/add_new_note_page.dart';
+import 'package:notes_app/screens/add_new_note_page.dart';
 import 'package:notes_app/constants/constants.dart';
 import 'package:notes_app/constants/icons/notes_icons.dart';
-import 'package:notes_app/cutom_dailog.dart';
-import 'package:notes_app/hive_db.dart';
-import 'package:notes_app/notes_button.dart';
-import 'package:notes_app/notes_open_page.dart';
+import 'package:notes_app/widgets/cutom_dailog.dart';
+import 'package:notes_app/utils/hive_db.dart';
+import 'package:notes_app/widgets/notes_button.dart';
+import 'package:notes_app/screens/notes_open_page.dart';
 import 'package:notes_app/utils/helpers.dart';
-import 'package:notes_app/no_notes_available.dart';
+import 'package:notes_app/widgets/no_notes_available.dart';
 import 'package:notes_app/utils/size_config.dart';
 import 'package:uuid/uuid.dart';
-import 'constants/constant_colors.dart';
+import '../constants/constant_colors.dart';
 
 class NotesHomePage extends StatefulWidget {
   @override

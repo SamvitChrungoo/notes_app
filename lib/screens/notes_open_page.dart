@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/constants/icons/notes_icons.dart';
-import 'package:notes_app/cutom_dailog.dart';
-import 'package:notes_app/notes_button.dart';
+import 'package:notes_app/widgets/cutom_dailog.dart';
+import 'package:notes_app/widgets/notes_button.dart';
 import 'package:notes_app/utils/size_config.dart';
 
-import 'constants/constant_colors.dart';
-import 'constants/constants.dart';
+import '../constants/constant_colors.dart';
+import '../constants/constants.dart';
 
 class NotesOpenPage extends StatefulWidget {
   @override
