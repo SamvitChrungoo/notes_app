@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/constants/constant_colors.dart';
 import 'package:notes_app/constants/icons/notes_icons.dart';
+import 'package:notes_app/cutom_dailog.dart';
 import 'package:notes_app/utils/size_config.dart';
 
 import 'constants/constants.dart';
@@ -49,7 +50,27 @@ class _AddNewNoteState extends State<AddNewNote> {
                 Container(
                   alignment: Alignment.topLeft,
                   child: NotesButton(
-                      onTap: () => Navigator.of(context).pop(),
+                      onTap: () {
+                        if (_noteBodyController.text.isNotEmpty &&
+                            _noteHeadingController.text.isNotEmpty) {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return CustomDialogBox(
+                                    title:
+                                        "Going back will discard this note, are you sure you want to go back ?",
+                                    onTapNegetive: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    onTapPositive: () {
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context).pop();
+                                    });
+                              });
+                        } else {
+                          Navigator.of(context).pop();
+                        }
+                      },
                       icon: Icon(NotesIcons.noteBack,
                           color: kTextColor, size: 18.toFont)),
                 ),

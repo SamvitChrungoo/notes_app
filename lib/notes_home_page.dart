@@ -6,6 +6,7 @@ import 'package:focused_menu/modals.dart';
 import 'package:notes_app/add_new_note_page.dart';
 import 'package:notes_app/constants/constants.dart';
 import 'package:notes_app/constants/icons/notes_icons.dart';
+import 'package:notes_app/cutom_dailog.dart';
 import 'package:notes_app/hive_db.dart';
 import 'package:notes_app/notes_button.dart';
 import 'package:notes_app/notes_open_page.dart';
@@ -154,7 +155,26 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                 NotesIcons.noteDelete,
                                                 color: Colors.redAccent,
                                               ),
-                                              onPressed: () {}),
+                                              onPressed: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return CustomDialogBox(
+                                                          title:
+                                                              "Are you sure you want to delete this note ?",
+                                                          onTapNegetive: () =>
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop(),
+                                                          onTapPositive: () {
+                                                            print('Deleted !!');
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          });
+                                                    });
+                                              }),
                                         ],
                                         blurSize: 4,
                                         menuBoxDecoration: BoxDecoration(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/constants/icons/notes_icons.dart';
+import 'package:notes_app/cutom_dailog.dart';
 import 'package:notes_app/notes_button.dart';
 import 'package:notes_app/utils/size_config.dart';
 
@@ -48,7 +49,19 @@ class _NotesOpenPageState extends State<NotesOpenPage> {
                                 color: kTextColor, size: 18.toFont)),
                         SizedBox(width: 10.toWidth),
                         NotesButton(
-                            onTap: () => null,
+                            onTap: () => showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return CustomDialogBox(
+                                      title:
+                                          "Are you sure you want to delete this note ?",
+                                      onTapNegetive: () =>
+                                          Navigator.of(context).pop(),
+                                      onTapPositive: () {
+                                        print('Deleted !!');
+                                        Navigator.of(context).pop();
+                                      });
+                                }),
                             icon: Icon(NotesIcons.noteDelete,
                                 color: kTextColor, size: 18.toFont)),
                         SizedBox(width: 10.toWidth),
