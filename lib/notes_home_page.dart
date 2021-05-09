@@ -143,14 +143,16 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                               ),
                                               onPressed: () {}),
                                           FocusedMenuItem(
-                                              backgroundColor: Colors.redAccent
+                                              backgroundColor: kBackgroungColor
                                                   .withOpacity(0.8),
                                               title: Text("Delete",
-                                                  style:
-                                                      kNotesDefaultTextStyle),
+                                                  style: kNotesDefaultTextStyle
+                                                      .copyWith(
+                                                          color: Colors
+                                                              .redAccent)),
                                               trailingIcon: Icon(
                                                 NotesIcons.noteDelete,
-                                                color: kTextColor,
+                                                color: Colors.redAccent,
                                               ),
                                               onPressed: () {}),
                                         ],
