@@ -84,7 +84,7 @@ class _NotesHomePageState extends State<NotesHomePage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Notes',
+                          Text('MyNotes',
                               style: kNotesDefaultHeadingStyle.copyWith(
                                   fontSize: 34)),
                           NotesButton(
@@ -189,10 +189,58 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                         animateMenuItems: false,
                                         menuWidth: SizeConfig().screenWidth / 2,
                                         child: Container(
-                                            decoration: BoxDecoration(
-                                                color: getColor(index),
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(12)))),
+                                          padding: EdgeInsets.only(
+                                              left: 10.toWidth,
+                                              right: 10.toWidth,
+                                              top: 12.toHeight),
+                                          decoration: BoxDecoration(
+                                              color: getColor(index),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(12))),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                'I am trying to right a normal sentance to check this pace haha I am trying to right a normal sentance to check this pacjage haha ght a normal sentance to check this samvit haha',
+                                                style: kNotesDefaultTextStyle
+                                                    .copyWith(
+                                                        color: kBackgroungColor,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        letterSpacing: 0.2,
+                                                        fontSize: index % 7 == 2
+                                                            ? 25.toFont
+                                                            : (index % 7 == 3 ||
+                                                                    index % 7 ==
+                                                                        5)
+                                                                ? 23.toFont
+                                                                : 20.5.toFont),
+                                                maxLines: (index % 7 == 3 ||
+                                                        index % 7 == 5)
+                                                    ? 6
+                                                    : index % 7 == 2
+                                                        ? 3
+                                                        : 4,
+                                                overflow: TextOverflow.ellipsis,
+                                                // minFontSize: 20,
+                                              ),
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    bottom: 12.toHeight),
+                                                child: Align(
+                                                    alignment:
+                                                        Alignment.bottomRight,
+                                                    child: Text('13 May, 2012',
+                                                        style: kNotesDefaultTextStyle
+                                                            .copyWith(
+                                                                color: kButtonColor
+                                                                    .withOpacity(
+                                                                        0.6)))),
+                                              )
+                                            ],
+                                          ),
+                                        ),
                                       )),
                             ),
                           )
