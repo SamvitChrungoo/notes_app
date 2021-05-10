@@ -18,3 +18,5 @@ const TextStyle kNotesDefaultHeadingStyle = TextStyle(
 const String kNotesNotFoundIcon = 'assets/images/no_notes_found.png';
 const String kNoSearchResultsIcon = 'assets/images/no_search_results_found.svg';
 const String kCurveArrowIcon = 'assets/images/curve_arrow.png';
+
+const pi = 3.1415926535897932;
