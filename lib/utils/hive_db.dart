@@ -4,9 +4,10 @@ import 'package:notes_app/model/notes.dart';
 
 class HiveDataProvider {
   bool _initialized = false;
-  HiveDataProvider() {
-    _databaseInit();
-  }
+
+  HiveDataProvider._databaseInit();
+  static final HiveDataProvider _instance = HiveDataProvider._databaseInit();
+  static HiveDataProvider get instance => _instance;
 
   Future<void> _databaseInit() async {
     if (!_initialized) {

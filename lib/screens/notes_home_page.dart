@@ -7,7 +7,6 @@ import 'package:notes_app/screens/add_new_note_page.dart';
 import 'package:notes_app/constants/constants.dart';
 import 'package:notes_app/constants/icons/notes_icons.dart';
 import 'package:notes_app/widgets/cutom_dailog.dart';
-import 'package:notes_app/utils/hive_db.dart';
 import 'package:notes_app/widgets/notes_button.dart';
 import 'package:notes_app/screens/notes_open_page.dart';
 import 'package:notes_app/utils/helpers.dart';
@@ -22,7 +21,6 @@ class NotesHomePage extends StatefulWidget {
 }
 
 class _NotesHomePageState extends State<NotesHomePage> {
-  HiveDataProvider _hiveDataProvider;
   Uuid _uniqueId;
   ScrollController _scrollController;
   bool _showAppbar = true;
@@ -31,7 +29,6 @@ class _NotesHomePageState extends State<NotesHomePage> {
 
   @override
   void initState() {
-    _hiveDataProvider = HiveDataProvider();
     _uniqueId = Uuid();
     _scrollController = ScrollController();
     _scrollController = new ScrollController();

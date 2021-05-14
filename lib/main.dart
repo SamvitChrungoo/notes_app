@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:notes_app/screens/notes_home_page.dart';
+import 'package:notes_app/screens/splash_screen.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarBrightness: Brightness.dark));
+
   runApp(MyApp());
 }
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: NotesHomePage(),
+      home: SplashScreen(),
     );
   }
 }
