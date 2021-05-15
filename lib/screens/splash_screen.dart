@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:notes_app/constants/constant_colors.dart';
+import 'package:notes_app/provider/notes_model.dart';
 import 'package:notes_app/screens/notes_home_page.dart';
-import 'package:notes_app/utils/hive_db.dart';
 import 'package:notes_app/utils/size_config.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -13,7 +14,6 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   AnimationController _controller;
-  List<dynamic> data;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void getNotes() async {
-    data = await HiveDataProvider.instance.readData('mynotes');
+    Provider.of<NotesModel>(context, listen: false).getNotes();
   }
 
   @override

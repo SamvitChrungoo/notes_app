@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
+import 'package:notes_app/provider/notes_model.dart';
 import 'package:notes_app/screens/add_new_note_page.dart';
 import 'package:notes_app/constants/constants.dart';
 import 'package:notes_app/constants/icons/notes_icons.dart';
@@ -12,7 +13,8 @@ import 'package:notes_app/screens/notes_open_page.dart';
 import 'package:notes_app/utils/helpers.dart';
 import 'package:notes_app/widgets/no_notes_available.dart';
 import 'package:notes_app/utils/size_config.dart';
-import 'package:uuid/uuid.dart';
+import 'package:provider/provider.dart';
+// import 'package:uuid/uuid.dart';
 import '../constants/constant_colors.dart';
 
 class NotesHomePage extends StatefulWidget {
@@ -21,7 +23,7 @@ class NotesHomePage extends StatefulWidget {
 }
 
 class _NotesHomePageState extends State<NotesHomePage> {
-  Uuid _uniqueId;
+  // Uuid _uniqueId;
   ScrollController _scrollController;
   bool _showAppbar = true;
   bool isScrollingDown = false;
@@ -29,7 +31,7 @@ class _NotesHomePageState extends State<NotesHomePage> {
 
   @override
   void initState() {
-    _uniqueId = Uuid();
+    // _uniqueId = Uuid();
     _scrollController = ScrollController();
     _scrollController = new ScrollController();
     _scrollController.addListener(() {
@@ -94,153 +96,167 @@ class _NotesHomePageState extends State<NotesHomePage> {
                       ),
                     ),
                     SizedBox(height: 10.toHeight),
-                    (notesAvailable)
-                        ? NoNotesAvailable()
-                        : Expanded(
-                            child: StaggeredGridView.count(
-                              controller: _scrollController,
-                              crossAxisCount: 4,
-                              staggeredTiles: List.generate(
-                                  15, (index) => getTileShape(index)),
-                              mainAxisSpacing: 12.toHeight,
-                              crossAxisSpacing: 12.toWidth,
-                              children: List.generate(
-                                  15,
-                                  (index) => FocusedMenuHolder(
-                                        onPressed: () => Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        NotesOpenPage())),
-                                        menuItems: <FocusedMenuItem>[
-                                          FocusedMenuItem(
-                                              backgroundColor: kBackgroungColor
-                                                  .withOpacity(0.8),
-                                              title: Text("Edit",
-                                                  style:
-                                                      kNotesDefaultTextStyle),
-                                              trailingIcon: Icon(
-                                                NotesIcons.noteEdit,
-                                                color: kTextColor,
-                                              ),
-                                              onPressed: () => Navigator.of(
-                                                      context)
-                                                  .push(MaterialPageRoute(
+                    Consumer<NotesModel>(builder: (context, notesModel, child) {
+                      return (!notesModel.notesAvailable)
+                          ? NoNotesAvailable()
+                          : Expanded(
+                              child: StaggeredGridView.count(
+                                controller: _scrollController,
+                                crossAxisCount: 4,
+                                staggeredTiles: List.generate(
+                                    15, (index) => getTileShape(index)),
+                                mainAxisSpacing: 12.toHeight,
+                                crossAxisSpacing: 12.toWidth,
+                                children: List.generate(
+                                    15,
+                                    (index) => FocusedMenuHolder(
+                                          onPressed: () => Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          NotesOpenPage())),
+                                          menuItems: <FocusedMenuItem>[
+                                            FocusedMenuItem(
+                                                backgroundColor:
+                                                    kBackgroungColor
+                                                        .withOpacity(0.8),
+                                                title: Text("Edit",
+                                                    style:
+                                                        kNotesDefaultTextStyle),
+                                                trailingIcon: Icon(
+                                                  NotesIcons.noteEdit,
+                                                  color: kTextColor,
+                                                ),
+                                                onPressed: () => Navigator.of(
+                                                        context)
+                                                    .push(MaterialPageRoute(
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            NotesOpenPage()))),
+                                            FocusedMenuItem(
+                                                backgroundColor:
+                                                    kBackgroungColor
+                                                        .withOpacity(0.8),
+                                                title: Text("Share",
+                                                    style:
+                                                        kNotesDefaultTextStyle),
+                                                trailingIcon: Icon(
+                                                  NotesIcons.noteShare,
+                                                  color: kTextColor,
+                                                ),
+                                                onPressed: () {}),
+                                            FocusedMenuItem(
+                                                backgroundColor:
+                                                    kBackgroungColor
+                                                        .withOpacity(0.8),
+                                                title: Text("Delete",
+                                                    style: kNotesDefaultTextStyle
+                                                        .copyWith(
+                                                            color: Colors
+                                                                .redAccent)),
+                                                trailingIcon: Icon(
+                                                  NotesIcons.noteDelete,
+                                                  color: Colors.redAccent,
+                                                ),
+                                                onPressed: () {
+                                                  showDialog(
+                                                      context: context,
                                                       builder: (BuildContext
-                                                              context) =>
-                                                          NotesOpenPage()))),
-                                          FocusedMenuItem(
-                                              backgroundColor: kBackgroungColor
-                                                  .withOpacity(0.8),
-                                              title: Text("Share",
-                                                  style:
-                                                      kNotesDefaultTextStyle),
-                                              trailingIcon: Icon(
-                                                NotesIcons.noteShare,
-                                                color: kTextColor,
-                                              ),
-                                              onPressed: () {}),
-                                          FocusedMenuItem(
-                                              backgroundColor: kBackgroungColor
-                                                  .withOpacity(0.8),
-                                              title: Text("Delete",
-                                                  style: kNotesDefaultTextStyle
-                                                      .copyWith(
-                                                          color: Colors
-                                                              .redAccent)),
-                                              trailingIcon: Icon(
-                                                NotesIcons.noteDelete,
-                                                color: Colors.redAccent,
-                                              ),
-                                              onPressed: () {
-                                                showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return CustomDialogBox(
-                                                          title:
-                                                              "Are you sure you want to delete this note ?",
-                                                          onTapNegetive: () =>
+                                                          context) {
+                                                        return CustomDialogBox(
+                                                            title:
+                                                                "Are you sure you want to delete this note ?",
+                                                            onTapNegetive: () =>
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop(),
+                                                            onTapPositive: () {
+                                                              print(
+                                                                  'Deleted !!');
                                                               Navigator.of(
                                                                       context)
-                                                                  .pop(),
-                                                          onTapPositive: () {
-                                                            print('Deleted !!');
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                          });
-                                                    });
-                                              }),
-                                        ],
-                                        blurSize: 4,
-                                        menuBoxDecoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10)),
-                                          color:
-                                              kBackgroungColor.withOpacity(0.8),
-                                        ),
-                                        menuItemExtent: 50.toHeight,
-                                        duration: Duration(milliseconds: 400),
-                                        menuOffset: 10.toHeight,
-                                        animateMenuItems: false,
-                                        menuWidth: SizeConfig().screenWidth / 2,
-                                        child: Container(
-                                          padding: EdgeInsets.only(
-                                              left: 10.toWidth,
-                                              right: 10.toWidth,
-                                              top: 12.toHeight),
-                                          decoration: BoxDecoration(
-                                              color: getColor(index),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(12))),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                'I am trying to right a normal sentance to check this pace haha I am trying to right a normal sentance to check this pacjage haha ght a normal sentance to check this samvit haha',
-                                                style: kNotesDefaultTextStyle
-                                                    .copyWith(
-                                                        color: kBackgroungColor,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        letterSpacing: 0.2,
-                                                        fontSize: index % 7 == 2
-                                                            ? 25.toFont
-                                                            : (index % 7 == 3 ||
-                                                                    index % 7 ==
-                                                                        5)
-                                                                ? 23.toFont
-                                                                : 20.5.toFont),
-                                                maxLines: (index % 7 == 3 ||
-                                                        index % 7 == 5)
-                                                    ? 6
-                                                    : index % 7 == 2
-                                                        ? 3
-                                                        : 4,
-                                                overflow: TextOverflow.ellipsis,
-                                                // minFontSize: 20,
-                                              ),
-                                              Container(
-                                                padding: EdgeInsets.only(
-                                                    bottom: 12.toHeight),
-                                                child: Align(
-                                                    alignment:
-                                                        Alignment.bottomRight,
-                                                    child: Text('13 May, 2012',
-                                                        style: kNotesDefaultTextStyle
-                                                            .copyWith(
-                                                                color: kButtonColor
-                                                                    .withOpacity(
-                                                                        0.6)))),
-                                              )
-                                            ],
+                                                                  .pop();
+                                                            });
+                                                      });
+                                                }),
+                                          ],
+                                          blurSize: 4,
+                                          menuBoxDecoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
+                                            color: kBackgroungColor
+                                                .withOpacity(0.8),
                                           ),
-                                        ),
-                                      )),
-                            ),
-                          )
+                                          menuItemExtent: 50.toHeight,
+                                          duration: Duration(milliseconds: 400),
+                                          menuOffset: 10.toHeight,
+                                          animateMenuItems: false,
+                                          menuWidth:
+                                              SizeConfig().screenWidth / 2,
+                                          child: Container(
+                                            padding: EdgeInsets.only(
+                                                left: 10.toWidth,
+                                                right: 10.toWidth,
+                                                top: 12.toHeight),
+                                            decoration: BoxDecoration(
+                                                color: getColor(index),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(12))),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'I am trying to right a normal sentance to check this pace haha I am trying to right a normal sentance to check this pacjage haha ght a normal sentance to check this samvit haha',
+                                                  style: kNotesDefaultTextStyle
+                                                      .copyWith(
+                                                          color:
+                                                              kBackgroungColor,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          letterSpacing: 0.2,
+                                                          fontSize: index % 7 ==
+                                                                  2
+                                                              ? 25.toFont
+                                                              : (index % 7 ==
+                                                                          3 ||
+                                                                      index % 7 ==
+                                                                          5)
+                                                                  ? 23.toFont
+                                                                  : 20.5
+                                                                      .toFont),
+                                                  maxLines: (index % 7 == 3 ||
+                                                          index % 7 == 5)
+                                                      ? 6
+                                                      : index % 7 == 2
+                                                          ? 3
+                                                          : 4,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  // minFontSize: 20,
+                                                ),
+                                                Container(
+                                                  padding: EdgeInsets.only(
+                                                      bottom: 12.toHeight),
+                                                  child: Align(
+                                                      alignment:
+                                                          Alignment.bottomRight,
+                                                      child: Text(
+                                                          '13 May, 2012',
+                                                          style: kNotesDefaultTextStyle
+                                                              .copyWith(
+                                                                  color: kButtonColor
+                                                                      .withOpacity(
+                                                                          0.6)))),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        )),
+                              ),
+                            );
+                    }),
                   ],
                 ),
               ))),
