@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void getNotes() async {
-    Provider.of<NotesModel>(context, listen: false).getNotes();
+    Provider.of<NotesModel>(context, listen: false).getAllNotes();
   }
 
   @override

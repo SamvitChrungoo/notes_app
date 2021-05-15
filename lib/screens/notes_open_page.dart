@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/constants/icons/notes_icons.dart';
+import 'package:notes_app/model/notes.dart';
+import 'package:notes_app/provider/notes_model.dart';
 import 'package:notes_app/widgets/cutom_dailog.dart';
 import 'package:notes_app/widgets/notes_button.dart';
 import 'package:notes_app/utils/size_config.dart';
+import 'package:provider/provider.dart';
 
 import '../constants/constant_colors.dart';
 import '../constants/constants.dart';
 
 class NotesOpenPage extends StatefulWidget {
-  @override
+  final Note currentNote;
+  NotesOpenPage(this.currentNote);
+
   _NotesOpenPageState createState() => _NotesOpenPageState();
 }
 
@@ -58,7 +63,10 @@ class _NotesOpenPageState extends State<NotesOpenPage> {
                                       onTapNegetive: () =>
                                           Navigator.of(context).pop(),
                                       onTapPositive: () {
-                                        print('Deleted !!');
+                                        Provider.of<NotesModel>(context,
+                                                listen: false)
+                                            .deleteNote(widget.currentNote.id);
+                                        Navigator.of(context).pop();
                                         Navigator.of(context).pop();
                                       });
                                 }),

@@ -14,7 +14,6 @@ import 'package:notes_app/utils/helpers.dart';
 import 'package:notes_app/widgets/no_notes_available.dart';
 import 'package:notes_app/utils/size_config.dart';
 import 'package:provider/provider.dart';
-// import 'package:uuid/uuid.dart';
 import '../constants/constant_colors.dart';
 
 class NotesHomePage extends StatefulWidget {
@@ -23,7 +22,6 @@ class NotesHomePage extends StatefulWidget {
 }
 
 class _NotesHomePageState extends State<NotesHomePage> {
-  // Uuid _uniqueId;
   ScrollController _scrollController;
   bool _showAppbar = true;
   bool isScrollingDown = false;
@@ -31,7 +29,6 @@ class _NotesHomePageState extends State<NotesHomePage> {
 
   @override
   void initState() {
-    // _uniqueId = Uuid();
     _scrollController = ScrollController();
     _scrollController = new ScrollController();
     _scrollController.addListener(() {
@@ -104,17 +101,19 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                 controller: _scrollController,
                                 crossAxisCount: 4,
                                 staggeredTiles: List.generate(
-                                    15, (index) => getTileShape(index)),
+                                    notesModel.notes.length,
+                                    (index) => getTileShape(index)),
                                 mainAxisSpacing: 12.toHeight,
                                 crossAxisSpacing: 12.toWidth,
                                 children: List.generate(
-                                    15,
+                                    notesModel.notes.length,
                                     (index) => FocusedMenuHolder(
                                           onPressed: () => Navigator.of(context)
                                               .push(MaterialPageRoute(
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          NotesOpenPage())),
+                                                  builder: (BuildContext
+                                                          context) =>
+                                                      NotesOpenPage(notesModel
+                                                          .notes[index]))),
                                           menuItems: <FocusedMenuItem>[
                                             FocusedMenuItem(
                                                 backgroundColor:
@@ -132,7 +131,10 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                     .push(MaterialPageRoute(
                                                         builder: (BuildContext
                                                                 context) =>
-                                                            NotesOpenPage()))),
+                                                            NotesOpenPage(
+                                                                notesModel
+                                                                        .notes[
+                                                                    index])))),
                                             FocusedMenuItem(
                                                 backgroundColor:
                                                     kBackgroungColor
@@ -171,8 +173,15 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                                         context)
                                                                     .pop(),
                                                             onTapPositive: () {
-                                                              print(
-                                                                  'Deleted !!');
+                                                              Provider.of<NotesModel>(
+                                                                      context,
+                                                                      listen:
+                                                                          false)
+                                                                  .deleteNote(
+                                                                      notesModel
+                                                                          .notes[
+                                                                              index]
+                                                                          .id);
                                                               Navigator.of(
                                                                       context)
                                                                   .pop();
@@ -207,34 +216,39 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Text(
-                                                  'I am trying to right a normal sentance to check this pace haha I am trying to right a normal sentance to check this pacjage haha ght a normal sentance to check this samvit haha',
-                                                  style: kNotesDefaultTextStyle
-                                                      .copyWith(
-                                                          color:
-                                                              kBackgroungColor,
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          letterSpacing: 0.2,
-                                                          fontSize: index % 7 ==
-                                                                  2
-                                                              ? 25.toFont
-                                                              : (index % 7 ==
-                                                                          3 ||
-                                                                      index % 7 ==
-                                                                          5)
-                                                                  ? 23.toFont
-                                                                  : 20.5
-                                                                      .toFont),
-                                                  maxLines: (index % 7 == 3 ||
-                                                          index % 7 == 5)
-                                                      ? 6
-                                                      : index % 7 == 2
-                                                          ? 3
-                                                          : 4,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  // minFontSize: 20,
+                                                Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Text(
+                                                    notesModel.notes[index].id
+                                                        .toString(),
+                                                    style: kNotesDefaultTextStyle
+                                                        .copyWith(
+                                                            color:
+                                                                kBackgroungColor,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            letterSpacing: 0.2,
+                                                            fontSize: index %
+                                                                        7 ==
+                                                                    2
+                                                                ? 25.toFont
+                                                                : (index % 7 ==
+                                                                            3 ||
+                                                                        index % 7 ==
+                                                                            5)
+                                                                    ? 23.toFont
+                                                                    : 20.5
+                                                                        .toFont),
+                                                    maxLines: (index % 7 == 3 ||
+                                                            index % 7 == 5)
+                                                        ? 6
+                                                        : index % 7 == 2
+                                                            ? 3
+                                                            : 4,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
                                                 ),
                                                 Container(
                                                   padding: EdgeInsets.only(

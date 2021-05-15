@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/constants/constant_colors.dart';
 import 'package:notes_app/constants/icons/notes_icons.dart';
+import 'package:notes_app/model/notes.dart';
+import 'package:notes_app/provider/notes_model.dart';
 import 'package:notes_app/widgets/cutom_dailog.dart';
 import 'package:notes_app/utils/size_config.dart';
+import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 import '../constants/constants.dart';
 import '../widgets/notes_button.dart';
@@ -15,9 +19,11 @@ class AddNewNote extends StatefulWidget {
 class _AddNewNoteState extends State<AddNewNote> {
   TextEditingController _noteHeadingController;
   TextEditingController _noteBodyController;
+  Uuid _uniqueId;
 
   @override
   void initState() {
+    _uniqueId = Uuid();
     _noteHeadingController = TextEditingController();
     _noteBodyController = TextEditingController();
     super.initState();
@@ -30,7 +36,17 @@ class _AddNewNoteState extends State<AddNewNote> {
       floatingActionButton: (_noteHeadingController.text.isNotEmpty &&
               _noteBodyController.text.isNotEmpty)
           ? FloatingActionButton.extended(
-              onPressed: () => null,
+              onPressed: () {
+                var newNote = Note(
+                    _uniqueId.v1(),
+                    DateTime.now().toString(),
+                    DateTime.now().toString(),
+                    _noteHeadingController.text,
+                    _noteBodyController.text);
+                Provider.of<NotesModel>(context, listen: false)
+                    .addNote(newNote);
+                Navigator.of(context).pop();
+              },
               backgroundColor: kButtonColor,
               elevation: 20,
               icon: Icon(NotesIcons.noteSave, size: 18),
