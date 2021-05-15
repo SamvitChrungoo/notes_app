@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
+import 'package:intl/intl.dart';
 import 'package:notes_app/provider/notes_model.dart';
 import 'package:notes_app/screens/add_new_note_page.dart';
 import 'package:notes_app/constants/constants.dart';
@@ -212,6 +213,8 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(12))),
                                             child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               mainAxisAlignment:
                                                   MainAxisAlignment
                                                       .spaceBetween,
@@ -220,7 +223,8 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                   alignment:
                                                       Alignment.centerLeft,
                                                   child: Text(
-                                                    notesModel.notes[index].id
+                                                    notesModel
+                                                        .notes[index].title
                                                         .toString(),
                                                     style: kNotesDefaultTextStyle
                                                         .copyWith(
@@ -229,6 +233,7 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                             fontWeight:
                                                                 FontWeight.w700,
                                                             letterSpacing: 0.2,
+                                                            height: 1.2,
                                                             fontSize: index %
                                                                         7 ==
                                                                     2
@@ -250,6 +255,45 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                         TextOverflow.ellipsis,
                                                   ),
                                                 ),
+                                                SizedBox(height: 8.toHeight),
+                                                Container(
+                                                  child: Expanded(
+                                                      child: ShaderMask(
+                                                    blendMode: BlendMode.dstIn,
+                                                    shaderCallback: (rect) {
+                                                      return LinearGradient(
+                                                        begin:
+                                                            Alignment.topCenter,
+                                                        end: Alignment
+                                                            .bottomCenter,
+                                                        stops: [0.4, 1.0],
+                                                        colors: [
+                                                          Colors.black,
+                                                          Colors.transparent,
+                                                        ],
+                                                      ).createShader(
+                                                        Rect.fromLTRB(
+                                                            0,
+                                                            0,
+                                                            rect.width,
+                                                            rect.height),
+                                                      );
+                                                    },
+                                                    child: Text(
+                                                        notesModel.notes[index]
+                                                            .content,
+                                                        style: kNotesDefaultTextStyle
+                                                            .copyWith(
+                                                                color:
+                                                                    kBackgroungColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                letterSpacing:
+                                                                    0.2,
+                                                                fontSize: 18)),
+                                                  )),
+                                                ),
                                                 Container(
                                                   padding: EdgeInsets.only(
                                                       bottom: 12.toHeight),
@@ -257,13 +301,19 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                       alignment:
                                                           Alignment.bottomRight,
                                                       child: Text(
-                                                          '13 May, 2012',
+                                                          DateFormat(
+                                                                  'MMMM d, y')
+                                                              .format(DateTime
+                                                                  .tryParse(notesModel
+                                                                      .notes[
+                                                                          index]
+                                                                      .createdAt)),
                                                           style: kNotesDefaultTextStyle
                                                               .copyWith(
                                                                   color: kButtonColor
                                                                       .withOpacity(
                                                                           0.6)))),
-                                                )
+                                                ),
                                               ],
                                             ),
                                           ),
