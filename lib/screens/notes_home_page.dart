@@ -81,7 +81,7 @@ class _NotesHomePageState extends State<NotesHomePage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('MyNotes',
+                          Text('myMemo',
                               style: kNotesDefaultHeadingStyle.copyWith(
                                   fontSize: 34)),
                           NotesButton(
