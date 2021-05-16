@@ -42,8 +42,8 @@ class HiveDataProvider {
     return box.values.toList();
   }
 
-  Future<void> updateData(String boxName, String id, Note note) async {
+  Future<void> updateData(String boxName, Note note) async {
     var box = await _getBox(boxName);
-    box.put(id, note);
+    box.put(note.id, note);
   }
 }

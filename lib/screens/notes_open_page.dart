@@ -18,25 +18,53 @@ class NotesOpenPage extends StatefulWidget {
 }
 
 class _NotesOpenPageState extends State<NotesOpenPage> {
+  TextEditingController _editHeadingController;
+  TextEditingController _editContentController;
+  bool startEditing = false;
+  final FocusNode _titleTextFieldFocusNode = FocusNode();
+  String initialHeading;
+  String initialContent;
+
+  @override
+  void initState() {
+    _editHeadingController =
+        TextEditingController(text: widget.currentNote.title);
+    _editContentController =
+        TextEditingController(text: widget.currentNote.content);
+    initialHeading = widget.currentNote.title;
+    initialContent = widget.currentNote.content;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroungColor,
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => null,
-        backgroundColor: kButtonColor,
-        elevation: 20,
-        icon: Icon(NotesIcons.noteSave, size: 18),
-        label: Text('Save'),
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(22))),
-      ),
+      floatingActionButton: (_editHeadingController.text != initialHeading ||
+              _editContentController.text != initialContent && startEditing)
+          ? FloatingActionButton.extended(
+              onPressed: () {
+                Provider.of<NotesModel>(context, listen: false).updateNote(
+                    widget.currentNote.copyWith(
+                        title: _editHeadingController.text,
+                        content: _editContentController.text,
+                        updatedAt: DateTime.now().toString()));
+                Navigator.of(context).pop();
+              },
+              backgroundColor: kButtonColor,
+              elevation: 20,
+              icon: Icon(NotesIcons.noteSave, size: 18),
+              label: Text('Save'),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(22))),
+            )
+          : null,
       body: DefaultTextStyle(
           style: kNotesDefaultTextStyle,
           child: SafeArea(
               child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.toWidth),
-            child: Column(
+            child: ListView(
               children: [
                 SizedBox(height: 10.toHeight),
                 Row(
@@ -74,16 +102,70 @@ class _NotesOpenPageState extends State<NotesOpenPage> {
                                 color: kTextColor, size: 18.toFont)),
                         SizedBox(width: 10.toWidth),
                         NotesButton(
-                            onTap: () => null,
+                            onTap: !startEditing
+                                ? () async {
+                                    setState(() {
+                                      print('tapped');
+                                      startEditing = true;
+                                    });
+                                    await Future.delayed(
+                                        Duration(milliseconds: 500));
+                                    _titleTextFieldFocusNode.requestFocus();
+                                  }
+                                : () {},
                             icon: Icon(NotesIcons.noteEdit,
                                 color: kTextColor, size: 18.toFont)),
                       ],
                     )
                   ],
                 ),
+                SizedBox(height: 20.toHeight),
+                Container(
+                    child: TextField(
+                  onChanged: (value) => setState(() {}),
+                  focusNode: _titleTextFieldFocusNode,
+                  maxLines: null,
+                  enabled: startEditing,
+                  style: kNotesDefaultHeadingStyle.copyWith(
+                      fontSize: 30, color: kTextColor),
+                  controller: _editHeadingController,
+                  cursorColor: kTextColor,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                  ),
+                )),
+                SizedBox(height: 20.toHeight),
+                Container(
+                  child: TextField(
+                    maxLines: null,
+                    enabled: startEditing,
+                    onChanged: (value) => setState(() {}),
+                    style: kNotesDefaultHeadingStyle.copyWith(
+                        fontSize: 20, color: kTextColor),
+                    controller: _editContentController,
+                    cursorColor: kTextColor,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                    ),
+                  ),
+                ),
               ],
             ),
           ))),
     );
+  }
+
+  @override
+  void dispose() {
+    _titleTextFieldFocusNode.dispose();
+    super.dispose();
   }
 }

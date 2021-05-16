@@ -92,6 +92,7 @@ class _AddNewNoteState extends State<AddNewNote> {
                 ),
                 SizedBox(height: 10.toHeight),
                 TextField(
+                  autofocus: true,
                   onChanged: (value) => setState(() {}),
                   maxLines: null,
                   style: kNotesDefaultHeadingStyle.copyWith(

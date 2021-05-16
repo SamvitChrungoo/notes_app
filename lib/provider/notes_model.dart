@@ -46,4 +46,17 @@ class NotesModel with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void updateNote(Note updatedNote) async {
+    await HiveDataProvider.instance
+        .updateData('mynotes', updatedNote)
+        .catchError((error) {
+      modelError = error;
+    });
+    if (modelError == null || modelError.isEmpty) {
+      notes[notes.indexWhere((element) => element.id == updatedNote.id)] =
+          updatedNote;
+    }
+    notifyListeners();
+  }
 }

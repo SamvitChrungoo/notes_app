@@ -15,4 +15,19 @@ class Note extends HiveObject {
   String content;
 
   Note(this.id, this.createdAt, this.updatedAt, this.title, this.content);
+
+  Note copyWith({
+    String id,
+    String createdAt,
+    String updatedAt,
+    String title,
+    String content,
+  }) =>
+      Note(
+        id ?? this.id,
+        createdAt ?? this.createdAt,
+        updatedAt ?? this.updatedAt,
+        title ?? this.title,
+        content ?? this.content,
+      );
 }
