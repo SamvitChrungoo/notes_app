@@ -133,9 +133,10 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                         builder: (BuildContext
                                                                 context) =>
                                                             NotesOpenPage(
-                                                                notesModel
-                                                                        .notes[
-                                                                    index])))),
+                                                              notesModel
+                                                                  .notes[index],
+                                                              withEditing: true,
+                                                            )))),
                                             FocusedMenuItem(
                                                 backgroundColor:
                                                     kBackgroungColor
@@ -147,7 +148,10 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                   NotesIcons.noteShare,
                                                   color: kTextColor,
                                                 ),
-                                                onPressed: () {}),
+                                                onPressed: () {
+                                                  shareNote(
+                                                      '${notesModel.notes[index].title}\n${notesModel.notes[index].content}');
+                                                }),
                                             FocusedMenuItem(
                                                 backgroundColor:
                                                     kBackgroungColor

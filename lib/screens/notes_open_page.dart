@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/constants/icons/notes_icons.dart';
 import 'package:notes_app/model/notes.dart';
 import 'package:notes_app/provider/notes_model.dart';
+import 'package:notes_app/utils/helpers.dart';
 import 'package:notes_app/widgets/cutom_dailog.dart';
 import 'package:notes_app/widgets/notes_button.dart';
 import 'package:notes_app/utils/size_config.dart';
@@ -12,7 +13,8 @@ import '../constants/constants.dart';
 
 class NotesOpenPage extends StatefulWidget {
   final Note currentNote;
-  NotesOpenPage(this.currentNote);
+  final bool withEditing;
+  NotesOpenPage(this.currentNote, {this.withEditing = false});
 
   _NotesOpenPageState createState() => _NotesOpenPageState();
 }
@@ -33,7 +35,18 @@ class _NotesOpenPageState extends State<NotesOpenPage> {
         TextEditingController(text: widget.currentNote.content);
     initialHeading = widget.currentNote.title;
     initialContent = widget.currentNote.content;
+    checkEditing();
     super.initState();
+  }
+
+  void checkEditing() async {
+    if (widget.withEditing) {
+      setState(() {
+        startEditing = true;
+      });
+      await Future.delayed(Duration(milliseconds: 500));
+      _titleTextFieldFocusNode.requestFocus();
+    }
   }
 
   @override
@@ -77,7 +90,10 @@ class _NotesOpenPageState extends State<NotesOpenPage> {
                     Row(
                       children: [
                         NotesButton(
-                            onTap: () => null,
+                            onTap: () {
+                              shareNote(
+                                  '${widget.currentNote.title}\n${widget.currentNote.content}');
+                            },
                             icon: Icon(NotesIcons.noteShare,
                                 color: kTextColor, size: 18.toFont)),
                         SizedBox(width: 10.toWidth),
@@ -105,7 +121,6 @@ class _NotesOpenPageState extends State<NotesOpenPage> {
                             onTap: !startEditing
                                 ? () async {
                                     setState(() {
-                                      print('tapped');
                                       startEditing = true;
                                     });
                                     await Future.delayed(

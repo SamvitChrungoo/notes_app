@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:notes_app/constants/constant_colors.dart';
+import 'package:share/share.dart';
 
 const colorList = [
   kStickyNotesRed,
@@ -38,4 +39,8 @@ StaggeredTile getTileShape(int index) {
     var newIdex = index % 7;
     return tileList[newIdex];
   }
+}
+
+void shareNote(String text) {
+  Share.share(text, subject: 'Sent from myMemo app');
 }
