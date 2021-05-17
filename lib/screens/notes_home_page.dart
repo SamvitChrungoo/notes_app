@@ -8,6 +8,7 @@ import 'package:notes_app/provider/notes_model.dart';
 import 'package:notes_app/screens/add_new_note_page.dart';
 import 'package:notes_app/constants/constants.dart';
 import 'package:notes_app/constants/icons/notes_icons.dart';
+import 'package:notes_app/screens/search_page.dart';
 import 'package:notes_app/widgets/cutom_dailog.dart';
 import 'package:notes_app/widgets/notes_button.dart';
 import 'package:notes_app/screens/notes_open_page.dart';
@@ -87,7 +88,13 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                       fontSize: 34)),
                               notesModel.notesAvailable
                                   ? NotesButton(
-                                      onTap: () => null,
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        NotesSearchPage()));
+                                      },
                                       icon: _showAppbar
                                           ? Icon(NotesIcons.noteSearch,
                                               color: kTextColor,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:notes_app/constants/icons/notes_icons.dart';
 import 'package:notes_app/model/notes.dart';
 import 'package:notes_app/provider/notes_model.dart';
@@ -117,19 +118,21 @@ class _NotesOpenPageState extends State<NotesOpenPage> {
                             icon: Icon(NotesIcons.noteDelete,
                                 color: kTextColor, size: 18.toFont)),
                         SizedBox(width: 10.toWidth),
-                        NotesButton(
-                            onTap: !startEditing
-                                ? () async {
-                                    setState(() {
-                                      startEditing = true;
-                                    });
-                                    await Future.delayed(
-                                        Duration(milliseconds: 500));
-                                    _titleTextFieldFocusNode.requestFocus();
-                                  }
-                                : () {},
-                            icon: Icon(NotesIcons.noteEdit,
-                                color: kTextColor, size: 18.toFont)),
+                        startEditing
+                            ? SizedBox()
+                            : NotesButton(
+                                onTap: !startEditing
+                                    ? () async {
+                                        setState(() {
+                                          startEditing = true;
+                                        });
+                                        await Future.delayed(
+                                            Duration(milliseconds: 500));
+                                        _titleTextFieldFocusNode.requestFocus();
+                                      }
+                                    : () {},
+                                icon: Icon(NotesIcons.noteEdit,
+                                    color: kTextColor, size: 18.toFont)),
                       ],
                     )
                   ],
@@ -153,7 +156,24 @@ class _NotesOpenPageState extends State<NotesOpenPage> {
                     disabledBorder: InputBorder.none,
                   ),
                 )),
-                SizedBox(height: 20.toHeight),
+                SizedBox(height: 10.toHeight),
+                !startEditing
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 20.toHeight,
+                            child: Text(
+                                DateFormat('MMMM d, y').format(
+                                    DateTime.tryParse(
+                                        widget.currentNote.createdAt)),
+                                style: kNotesDefaultTextStyle.copyWith(
+                                    color: kTextColor.withOpacity(0.6))),
+                          ),
+                          SizedBox(height: 10.toHeight),
+                        ],
+                      )
+                    : SizedBox(height: 30.toHeight),
                 Container(
                   child: TextField(
                     maxLines: null,

@@ -59,4 +59,13 @@ class NotesModel with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  List<dynamic> searchNotes(String query) {
+    var results = [];
+    notes.forEach((element) {
+      if (element.title.toString().toLowerCase().contains(query))
+        results.add(element);
+    });
+    return results;
+  }
 }
