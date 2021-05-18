@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,6 +14,7 @@ import 'package:notes_app/provider/notes_model.dart';
 import 'package:notes_app/screens/notes_open_page.dart';
 import 'package:notes_app/utils/helpers.dart';
 import 'package:notes_app/widgets/cutom_dailog.dart';
+import 'package:notes_app/widgets/dynamic_highlight_text.dart';
 import 'package:notes_app/widgets/notes_button.dart';
 import 'package:notes_app/utils/size_config.dart';
 import 'package:provider/provider.dart';
@@ -160,16 +163,15 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
                                               NotesIcons.noteEdit,
                                               color: kTextColor,
                                             ),
-                                            onPressed: () =>
-                                                Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                            NotesOpenPage(
-                                                              notesModel
-                                                                  .notes[index],
-                                                              withEditing: true,
-                                                            )))),
+                                            onPressed: () => Navigator.of(
+                                                    context)
+                                                .push(MaterialPageRoute(
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        NotesOpenPage(
+                                                          searchResults[index],
+                                                          withEditing: true,
+                                                        )))),
                                         FocusedMenuItem(
                                             backgroundColor: kBackgroungColor
                                                 .withOpacity(0.8),
@@ -251,10 +253,14 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
                                           children: [
                                             Align(
                                               alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                searchResults[index]
+                                              child: DynamicTextHighlighting(
+                                                text: searchResults[index]
                                                     .title
                                                     .toString(),
+                                                highlights: [
+                                                  _searchController.text
+                                                ],
+                                                caseSensitive: false,
                                                 style: kNotesDefaultTextStyle
                                                     .copyWith(
                                                         color: kBackgroungColor,
