@@ -63,7 +63,7 @@ class NotesModel with ChangeNotifier {
   List<dynamic> searchNotes(String query) {
     var results = [];
     notes.forEach((element) {
-      if (element.title.toString().toLowerCase().contains(query))
+      if (element.title.toString().toLowerCase().contains(query.toLowerCase()))
         results.add(element);
     });
     return results;
