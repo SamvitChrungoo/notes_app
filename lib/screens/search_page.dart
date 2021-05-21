@@ -214,10 +214,10 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
                                                                   context,
                                                                   listen: false)
                                                               .deleteNote(
-                                                                  notesModel
-                                                                      .notes[
+                                                                  searchResults[
                                                                           index]
                                                                       .id);
+
                                                           Navigator.of(context)
                                                               .pop();
                                                         });
@@ -307,8 +307,9 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
                                                   );
                                                 },
                                                 child: Text(
-                                                    notesModel
-                                                        .notes[index].content,
+                                                    searchResults[
+                                                            index]
+                                                        .content,
                                                     style: kNotesDefaultTextStyle
                                                         .copyWith(
                                                             color:
@@ -323,14 +324,15 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
                                               padding: EdgeInsets.only(
                                                   bottom: 12.toHeight),
                                               child: Align(
-                                                  alignment:
-                                                      Alignment.bottomRight,
+                                                  alignment: Alignment
+                                                      .bottomRight,
                                                   child: Text(
                                                       DateFormat('MMMM d, y')
-                                                          .format(DateTime
-                                                              .tryParse(notesModel
-                                                                  .notes[index]
-                                                                  .createdAt)),
+                                                          .format(
+                                                              DateTime.tryParse(
+                                                                  searchResults[
+                                                                          index]
+                                                                      .updatedAt)),
                                                       style: kNotesDefaultTextStyle
                                                           .copyWith(
                                                               color: kButtonColor
