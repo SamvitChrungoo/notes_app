@@ -166,7 +166,7 @@ class _NotesOpenPageState extends State<NotesOpenPage> {
                             child: Text(
                                 DateFormat('MMMM d, y').format(
                                     DateTime.tryParse(
-                                        widget.currentNote.createdAt)),
+                                        widget.currentNote.updatedAt)),
                                 style: kNotesDefaultTextStyle.copyWith(
                                     color: kTextColor.withOpacity(0.6))),
                           ),

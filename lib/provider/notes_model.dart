@@ -12,6 +12,7 @@ class NotesModel with ChangeNotifier {
     if (fetchedNotes.isNotEmpty) {
       notes = fetchedNotes;
       notesAvailable = true;
+      sortNotes();
     }
     notifyListeners();
   }
@@ -27,6 +28,7 @@ class NotesModel with ChangeNotifier {
       if (notes.isEmpty) {
         notesAvailable = false;
       }
+      sortNotes();
     }
     notifyListeners();
   }
@@ -43,6 +45,7 @@ class NotesModel with ChangeNotifier {
         notes = [];
       }
       notes.add(newNote);
+      sortNotes();
     }
     notifyListeners();
   }
@@ -57,6 +60,7 @@ class NotesModel with ChangeNotifier {
       notes[notes.indexWhere((element) => element.id == updatedNote.id)] =
           updatedNote;
     }
+    sortNotes();
     notifyListeners();
   }
 
@@ -67,5 +71,10 @@ class NotesModel with ChangeNotifier {
         results.add(element);
     });
     return results;
+  }
+
+  void sortNotes() {
+    notes.sort((a, b) => DateTime.tryParse(b.updatedAt)
+        .compareTo(DateTime.tryParse(a.updatedAt)));
   }
 }

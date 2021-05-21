@@ -331,7 +331,7 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                                     .tryParse(notesModel
                                                                         .notes[
                                                                             index]
-                                                                        .createdAt)),
+                                                                        .updatedAt)),
                                                             style: kNotesDefaultTextStyle.copyWith(
                                                                 color: kButtonColor
                                                                     .withOpacity(
