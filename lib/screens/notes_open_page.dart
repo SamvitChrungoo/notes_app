@@ -15,7 +15,16 @@ import '../constants/constants.dart';
 class NotesOpenPage extends StatefulWidget {
   final Note currentNote;
   final bool withEditing;
-  NotesOpenPage(this.currentNote, {this.withEditing = false});
+  final bool fromSearch;
+  final Function(bool) isDeleted;
+  final Function(Note) isEdited;
+  NotesOpenPage(
+    this.currentNote, {
+    this.withEditing = false,
+    this.fromSearch = false,
+    this.isDeleted,
+    this.isEdited,
+  });
 
   _NotesOpenPageState createState() => _NotesOpenPageState();
 }
@@ -58,11 +67,15 @@ class _NotesOpenPageState extends State<NotesOpenPage> {
               _editContentController.text != initialContent && startEditing)
           ? FloatingActionButton.extended(
               onPressed: () {
-                Provider.of<NotesModel>(context, listen: false).updateNote(
-                    widget.currentNote.copyWith(
-                        title: _editHeadingController.text,
-                        content: _editContentController.text,
-                        updatedAt: DateTime.now().toString()));
+                var updatedNote = widget.currentNote.copyWith(
+                    title: _editHeadingController.text,
+                    content: _editContentController.text,
+                    updatedAt: DateTime.now().toString());
+                Provider.of<NotesModel>(context, listen: false)
+                    .updateNote(updatedNote);
+                if (widget.fromSearch) {
+                  widget.isEdited(updatedNote);
+                }
                 Navigator.of(context).pop();
               },
               backgroundColor: kButtonColor,
@@ -113,6 +126,9 @@ class _NotesOpenPageState extends State<NotesOpenPage> {
                                             .deleteNote(widget.currentNote.id);
                                         Navigator.of(context).pop();
                                         Navigator.of(context).pop();
+                                        if (widget.fromSearch) {
+                                          widget.isDeleted(true);
+                                        }
                                       });
                                 }),
                             icon: Icon(NotesIcons.noteDelete,

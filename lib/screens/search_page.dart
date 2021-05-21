@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
@@ -152,7 +150,19 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
                                           .push(MaterialPageRoute(
                                               builder: (BuildContext context) =>
                                                   NotesOpenPage(
-                                                      searchResults[index]))),
+                                                    searchResults[index],
+                                                    fromSearch: true,
+                                                    isDeleted: (val) {
+                                                      if (val) {
+                                                        searchResults
+                                                            .removeAt(index);
+                                                      }
+                                                    },
+                                                    isEdited: (val) {
+                                                      searchResults[index] =
+                                                          val;
+                                                    },
+                                                  ))),
                                       menuItems: <FocusedMenuItem>[
                                         FocusedMenuItem(
                                             backgroundColor: kBackgroungColor
@@ -171,6 +181,18 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
                                                         NotesOpenPage(
                                                           searchResults[index],
                                                           withEditing: true,
+                                                          fromSearch: true,
+                                                          isDeleted: (val) {
+                                                            if (val) {
+                                                              searchResults
+                                                                  .removeAt(
+                                                                      index);
+                                                            }
+                                                          },
+                                                          isEdited: (val) {
+                                                            searchResults[
+                                                                index] = val;
+                                                          },
                                                         )))),
                                         FocusedMenuItem(
                                             backgroundColor: kBackgroungColor
@@ -217,6 +239,8 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
                                                                   searchResults[
                                                                           index]
                                                                       .id);
+                                                          searchResults
+                                                              .removeAt(index);
 
                                                           Navigator.of(context)
                                                               .pop();
