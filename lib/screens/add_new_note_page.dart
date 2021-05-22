@@ -42,7 +42,8 @@ class _AddNewNoteState extends State<AddNewNote> {
                     DateTime.now().toString(),
                     DateTime.now().toString(),
                     _noteHeadingController.text,
-                    _noteBodyController.text);
+                    _noteBodyController.text,
+                    false);
                 Provider.of<NotesModel>(context, listen: false)
                     .addNote(newNote);
                 Navigator.of(context).pop();

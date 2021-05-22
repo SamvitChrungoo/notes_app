@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:intl/intl.dart';
+import 'package:notes_app/model/notes.dart';
 import 'package:notes_app/provider/notes_model.dart';
 import 'package:notes_app/screens/add_new_note_page.dart';
 import 'package:notes_app/constants/constants.dart';
@@ -27,9 +29,12 @@ class _NotesHomePageState extends State<NotesHomePage> {
   ScrollController _scrollController;
   bool _showAppbar = true;
   bool isScrollingDown = false;
+  FToast fToast;
 
   @override
   void initState() {
+    fToast = FToast();
+    fToast.init(context);
     _scrollController = ScrollController();
     _scrollController = new ScrollController();
     _scrollController.addListener(() {
@@ -321,10 +326,76 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                   Container(
                                                     padding: EdgeInsets.only(
                                                         bottom: 12.toHeight),
-                                                    child: Align(
-                                                        alignment: Alignment
-                                                            .bottomRight,
-                                                        child: Text(
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        InkWell(
+                                                          onTap: () {
+                                                            Note updatedNote =
+                                                                notesModel.notes[
+                                                                        index]
+                                                                    as Note;
+                                                            notesModel.updateNote(
+                                                                updatedNote.copyWith(
+                                                                    starred: !notesModel
+                                                                        .notes[
+                                                                            index]
+                                                                        .starred));
+                                                            fToast.showToast(
+                                                              child: Container(
+                                                                  padding: EdgeInsets.symmetric(
+                                                                      horizontal:
+                                                                          20,
+                                                                      vertical:
+                                                                          12),
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            25.0),
+                                                                    color: kButtonColor
+                                                                        .withOpacity(
+                                                                            0.8),
+                                                                  ),
+                                                                  child: Text(
+                                                                    notesModel
+                                                                            .notes[index]
+                                                                            .starred
+                                                                        ? "Removed from starred"
+                                                                        : "Added to starred",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color:
+                                                                          kTextColor,
+                                                                      fontSize:
+                                                                          16,
+                                                                    ),
+                                                                  )),
+                                                              gravity:
+                                                                  ToastGravity
+                                                                      .BOTTOM,
+                                                              toastDuration:
+                                                                  Duration(
+                                                                      seconds:
+                                                                          2),
+                                                            );
+                                                          },
+                                                          child: Icon(
+                                                              notesModel
+                                                                      .notes[
+                                                                          index]
+                                                                      .starred
+                                                                  ? NotesIcons
+                                                                      .noteStarFilled
+                                                                  : NotesIcons
+                                                                      .noteStarHollow,
+                                                              color:
+                                                                  kButtonColor,
+                                                              size: 18.toFont),
+                                                        ),
+                                                        Text(
                                                             DateFormat(
                                                                     'MMMM d, y')
                                                                 .format(DateTime
@@ -335,7 +406,9 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                             style: kNotesDefaultTextStyle.copyWith(
                                                                 color: kButtonColor
                                                                     .withOpacity(
-                                                                        0.6)))),
+                                                                        0.6))),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ],
                                               ),

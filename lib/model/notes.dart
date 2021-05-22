@@ -13,8 +13,11 @@ class Note extends HiveObject {
   String title;
   @HiveField(4)
   String content;
+  @HiveField(5)
+  bool starred;
 
-  Note(this.id, this.createdAt, this.updatedAt, this.title, this.content);
+  Note(this.id, this.createdAt, this.updatedAt, this.title, this.content,
+      this.starred);
 
   Note copyWith({
     String id,
@@ -22,6 +25,7 @@ class Note extends HiveObject {
     String updatedAt,
     String title,
     String content,
+    bool starred,
   }) =>
       Note(
         id ?? this.id,
@@ -29,5 +33,6 @@ class Note extends HiveObject {
         updatedAt ?? this.updatedAt,
         title ?? this.title,
         content ?? this.content,
+        starred ?? this.starred,
       );
 }
