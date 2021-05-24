@@ -31,6 +31,7 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
     return Scaffold(
       backgroundColor: kBackgroungColor,
       body: SafeArea(
+        bottom: false,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.toWidth),
           child: Consumer<NotesModel>(builder: (context, notesModel, child) {

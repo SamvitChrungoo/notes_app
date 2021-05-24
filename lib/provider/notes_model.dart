@@ -76,5 +76,6 @@ class NotesModel with ChangeNotifier {
   void sortNotes() {
     notes.sort((a, b) => DateTime.tryParse(b.updatedAt)
         .compareTo(DateTime.tryParse(a.updatedAt)));
+    notes.sort((a, b) => b.starred.toString().compareTo(a.starred.toString()));
   }
 }
