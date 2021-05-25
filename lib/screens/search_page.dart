@@ -26,6 +26,7 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
   TextEditingController _searchController = TextEditingController();
   List searchResults = [];
   var resultOpacity = 0.0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,17 +71,17 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
                         },
                         autofocus: true,
                         style: kNotesDefaultHeadingStyle.copyWith(
-                            fontSize: 22, color: kTextColor),
+                            fontSize: 22.toFont, color: kTextColor),
                         cursorColor: kTextColor,
                         decoration: InputDecoration(
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                            disabledBorder: InputBorder.none,
+                            border: kNoInputBorder,
+                            focusedBorder: kNoInputBorder,
+                            enabledBorder: kNoInputBorder,
+                            errorBorder: kNoInputBorder,
+                            disabledBorder: kNoInputBorder,
                             hintText: 'search notes ...',
                             hintStyle: kNotesDefaultHeadingStyle.copyWith(
-                                fontSize: 20,
+                                fontSize: 20.toFont,
                                 color: kTextColor.withOpacity(0.6))),
                       )),
                     ],
@@ -91,7 +92,7 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
                     ? AnimatedSwitcher(
                         child: _searchController.text.isEmpty
                             ? Column(
-                                key: Key('start_search'),
+                                key: Key(kStartSearchKey),
                                 children: [
                                   SizedBox(
                                     height: 100.toHeight,
@@ -99,35 +100,34 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
                                   Opacity(
                                     opacity: 0.4,
                                     child: Lottie.asset(
-                                      'assets/lottie/search_notes.json',
+                                      kSearchMemoLottie,
                                       height: 200.toHeight,
                                     ),
                                   ),
-                                  Text(
-                                      'Start searching by typing in\nthe above textfield ...',
+                                  Text(kStartSearchingText,
                                       textAlign: TextAlign.center,
                                       style: kNotesDefaultHeadingStyle.copyWith(
                                           letterSpacing: 0.6,
-                                          fontSize: 22,
+                                          fontSize: 22.toFont,
                                           color: kTextColor.withOpacity(0.6)))
                                 ],
                               )
                             : Column(
-                                key: Key('no_results_found'),
+                                key: Key(kNoResultsFoundKey),
                                 children: [
                                   SizedBox(
                                     height: 100.toHeight,
                                   ),
                                   SvgPicture.asset(
-                                    'assets/images/no_search_results_found.svg',
+                                    kNoSearchResultsFound,
                                     color: kTextColor.withOpacity(0.4),
                                     height: 200.toHeight,
                                   ),
                                   SizedBox(height: 20.toHeight),
-                                  Text('No search results found ...',
+                                  Text(kNoSearchResultsFoundText,
                                       style: kNotesDefaultHeadingStyle.copyWith(
                                           letterSpacing: 0.6,
-                                          fontSize: 22,
+                                          fontSize: 22.toFont,
                                           color: kTextColor.withOpacity(0.6)))
                                 ],
                               ),
@@ -135,7 +135,7 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
                       )
                     : Expanded(
                         child: AnimatedOpacity(
-                          key: Key('search_results'),
+                          key: Key(kSearchResultKey),
                           opacity: resultOpacity,
                           duration: Duration(milliseconds: 500),
                           child: StaggeredGridView.count(
@@ -227,7 +227,7 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
                                                       (BuildContext context) {
                                                     return CustomDialogBox(
                                                         title:
-                                                            "Are you sure you want to delete this note ?",
+                                                            kDeleteConfirmationText,
                                                         onTapNegetive: () =>
                                                             Navigator.of(
                                                                     context)
@@ -342,7 +342,8 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
                                                             fontWeight:
                                                                 FontWeight.w400,
                                                             letterSpacing: 0.2,
-                                                            fontSize: 18)),
+                                                            fontSize:
+                                                                18.toFont)),
                                               )),
                                             ),
                                             Container(
@@ -377,5 +378,11 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 }

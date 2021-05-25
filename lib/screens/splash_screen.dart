@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:notes_app/constants/constant_colors.dart';
+import 'package:notes_app/constants/constants.dart';
 import 'package:notes_app/provider/notes_model.dart';
 import 'package:notes_app/screens/notes_home_page.dart';
 import 'package:notes_app/utils/size_config.dart';
@@ -27,11 +28,11 @@ class _SplashScreenState extends State<SplashScreen>
         );
       }
     });
-    getNotes();
+    loadAllNotes();
     super.initState();
   }
 
-  void getNotes() async {
+  void loadAllNotes() async {
     Provider.of<NotesModel>(context, listen: false).getAllNotes();
   }
 
@@ -42,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen>
       backgroundColor: kBackgroungColor,
       body: Center(
         child: Lottie.asset(
-          'assets/lottie/notes_animation.json',
+          kSplashScreenLottie,
           height: 300.toHeight,
           controller: _controller,
           onLoaded: (composition) async {

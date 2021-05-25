@@ -45,7 +45,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                 Text(
                   widget.title,
                   style: kNotesDefaultHeadingStyle.copyWith(
-                      letterSpacing: 0.5, fontSize: 20),
+                      letterSpacing: 0.5, fontSize: 20.toFont),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(
@@ -71,7 +71,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                   alignment: Alignment.center,
                                   child: Text('No',
                                       style: kNotesDefaultTextStyle.copyWith(
-                                          fontSize: 18))),
+                                          fontSize: 18.toFont))),
                             ),
                           ),
                           Expanded(
@@ -87,7 +87,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                   child: Text('Yes',
                                       style: kNotesDefaultTextStyle.copyWith(
                                           color: Colors.redAccent,
-                                          fontSize: 18))),
+                                          fontSize: 18.toFont))),
                             ),
                           ),
                         ],

@@ -50,7 +50,7 @@ class _AddNewNoteState extends State<AddNewNote> {
               },
               backgroundColor: kButtonColor,
               elevation: 20,
-              icon: Icon(NotesIcons.noteSave, size: 18),
+              icon: Icon(NotesIcons.noteSave, size: 18.toFont),
               label: Text('Save'),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(22))),
@@ -76,7 +76,7 @@ class _AddNewNoteState extends State<AddNewNote> {
                                   builder: (BuildContext context) {
                                     return CustomDialogBox(
                                         title:
-                                            "Going back will discard this note, are you sure you want to go back ?",
+                                            "Going back will discard this memo, are you sure you want to go back ?",
                                         onTapNegetive: () {
                                           Navigator.of(context).pop();
                                         },
@@ -102,14 +102,14 @@ class _AddNewNoteState extends State<AddNewNote> {
                       controller: _noteHeadingController,
                       cursorColor: kTextColor,
                       decoration: InputDecoration(
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          disabledBorder: InputBorder.none,
+                          border: kNoInputBorder,
+                          focusedBorder: kNoInputBorder,
+                          enabledBorder: kNoInputBorder,
+                          errorBorder: kNoInputBorder,
+                          disabledBorder: kNoInputBorder,
                           hintText: 'Title',
                           hintStyle: kNotesDefaultHeadingStyle.copyWith(
-                              fontSize: 30,
+                              fontSize: 30.toFont,
                               color: kTextColor.withOpacity(0.6))),
                     ),
                     SizedBox(height: 20.toHeight),
@@ -117,23 +117,30 @@ class _AddNewNoteState extends State<AddNewNote> {
                       maxLines: null,
                       onChanged: (value) => setState(() {}),
                       style: kNotesDefaultHeadingStyle.copyWith(
-                          fontSize: 20, color: kTextColor),
+                          fontSize: 20.toFont, color: kTextColor),
                       controller: _noteBodyController,
                       cursorColor: kTextColor,
                       decoration: InputDecoration(
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          disabledBorder: InputBorder.none,
+                          border: kNoInputBorder,
+                          focusedBorder: kNoInputBorder,
+                          enabledBorder: kNoInputBorder,
+                          errorBorder: kNoInputBorder,
+                          disabledBorder: kNoInputBorder,
                           hintText: 'Type something ...',
                           hintStyle: kNotesDefaultHeadingStyle.copyWith(
-                              fontSize: 20,
+                              fontSize: 20.toFont,
                               color: kTextColor.withOpacity(0.6))),
                     ),
                   ],
                 ),
               ))),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _noteHeadingController.dispose();
+    _noteBodyController.dispose();
   }
 }

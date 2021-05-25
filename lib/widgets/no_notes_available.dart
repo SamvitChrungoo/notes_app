@@ -13,7 +13,6 @@ class NoNotesAvailable extends StatefulWidget {
 class _NoNotesAvailableState extends State<NoNotesAvailable>
     with TickerProviderStateMixin {
   AnimationController _controller;
-  int haha = 0;
   @override
   void initState() {
     _controller = AnimationController(vsync: this);
@@ -35,19 +34,17 @@ class _NoNotesAvailableState extends State<NoNotesAvailable>
             textAlign: TextAlign.center,
             style: kNotesDefaultHeadingStyle.copyWith(
                 letterSpacing: 0.6,
-                fontSize: 22,
+                fontSize: 22.toFont,
                 color: kTextColor.withOpacity(0.6))),
-        // SizedBox(height: 24.toHeight),
         Opacity(
           opacity: 0.6,
-          child: Lottie.asset('assets/lottie/empty_notes.json',
-              height: 250, width: 250),
+          child: Lottie.asset(kEmptyMemoLottie, height: 250, width: 250),
         ),
         Text("Click the '+' icon to add a \nnew note !!",
             textAlign: TextAlign.center,
             style: kNotesDefaultHeadingStyle.copyWith(
                 letterSpacing: 0.6,
-                fontSize: 22,
+                fontSize: 22.toFont,
                 color: kTextColor.withOpacity(0.6))),
         SizedBox(height: 20.toHeight),
         Container(
@@ -57,7 +54,7 @@ class _NoNotesAvailableState extends State<NoNotesAvailable>
             child: Transform.rotate(
               angle: 3 * pi / 2,
               child: Lottie.asset(
-                'assets/lottie/arrow_down.json',
+                kArrowDownLottie,
                 height: 150.toHeight,
                 width: 150.toWidth,
                 repeat: false,

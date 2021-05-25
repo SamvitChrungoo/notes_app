@@ -80,7 +80,7 @@ class _NotesOpenPageState extends State<NotesOpenPage> {
               },
               backgroundColor: kButtonColor,
               elevation: 20,
-              icon: Icon(NotesIcons.noteSave, size: 18),
+              icon: Icon(NotesIcons.noteSave, size: 18.toFont),
               label: Text('Save'),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(22))),
@@ -117,8 +117,7 @@ class _NotesOpenPageState extends State<NotesOpenPage> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return CustomDialogBox(
-                                          title:
-                                              "Are you sure you want to delete this note ?",
+                                          title: kDeleteConfirmationText,
                                           onTapNegetive: () =>
                                               Navigator.of(context).pop(),
                                           onTapPositive: () {
@@ -164,15 +163,15 @@ class _NotesOpenPageState extends State<NotesOpenPage> {
                       maxLines: null,
                       enabled: startEditing,
                       style: kNotesDefaultHeadingStyle.copyWith(
-                          fontSize: 30, color: kTextColor),
+                          fontSize: 30.toFont, color: kTextColor),
                       controller: _editHeadingController,
                       cursorColor: kTextColor,
                       decoration: InputDecoration(
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
+                        border: kNoInputBorder,
+                        focusedBorder: kNoInputBorder,
+                        enabledBorder: kNoInputBorder,
+                        errorBorder: kNoInputBorder,
+                        disabledBorder: kNoInputBorder,
                       ),
                     )),
                     SizedBox(height: 10.toHeight),
@@ -199,15 +198,15 @@ class _NotesOpenPageState extends State<NotesOpenPage> {
                         enabled: startEditing,
                         onChanged: (value) => setState(() {}),
                         style: kNotesDefaultHeadingStyle.copyWith(
-                            fontSize: 20, color: kTextColor),
+                            fontSize: 20.toFont, color: kTextColor),
                         controller: _editContentController,
                         cursorColor: kTextColor,
                         decoration: InputDecoration(
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          disabledBorder: InputBorder.none,
+                          border: kNoInputBorder,
+                          focusedBorder: kNoInputBorder,
+                          enabledBorder: kNoInputBorder,
+                          errorBorder: kNoInputBorder,
+                          disabledBorder: kNoInputBorder,
                         ),
                       ),
                     ),
@@ -220,6 +219,8 @@ class _NotesOpenPageState extends State<NotesOpenPage> {
   @override
   void dispose() {
     _titleTextFieldFocusNode.dispose();
+    _editHeadingController.dispose();
+    _editContentController.dispose();
     super.dispose();
   }
 }

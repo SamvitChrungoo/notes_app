@@ -36,7 +36,6 @@ class _NotesHomePageState extends State<NotesHomePage> {
     fToast = FToast();
     fToast.init(context);
     _scrollController = ScrollController();
-    _scrollController = new ScrollController();
     _scrollController.addListener(() {
       if (_scrollController.position.userScrollDirection ==
           ScrollDirection.reverse) {
@@ -62,10 +61,14 @@ class _NotesHomePageState extends State<NotesHomePage> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: kBackgroungColor,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).push(
-            MaterialPageRoute(builder: (BuildContext context) => AddNewNote())),
+        onPressed: () {
+          fToast.removeQueuedCustomToasts();
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => AddNewNote()));
+        },
         backgroundColor: kButtonColor,
         elevation: 20,
         child: Icon(Icons.add, size: 30.toFont),
@@ -94,6 +97,7 @@ class _NotesHomePageState extends State<NotesHomePage> {
                               notesModel.notesAvailable
                                   ? NotesButton(
                                       onTap: () {
+                                        fToast.removeQueuedCustomToasts();
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder:
@@ -124,13 +128,17 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                   children: List.generate(
                                       notesModel.notes.length,
                                       (index) => FocusedMenuHolder(
-                                            onPressed: () => Navigator.of(
-                                                    context)
-                                                .push(MaterialPageRoute(
-                                                    builder: (BuildContext
-                                                            context) =>
-                                                        NotesOpenPage(notesModel
-                                                            .notes[index]))),
+                                            onPressed: () {
+                                              fToast.removeQueuedCustomToasts();
+
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          NotesOpenPage(
+                                                              notesModel.notes[
+                                                                  index])));
+                                            },
                                             menuItems: <FocusedMenuItem>[
                                               FocusedMenuItem(
                                                   backgroundColor:
@@ -143,18 +151,21 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                     NotesIcons.noteEdit,
                                                     color: kTextColor,
                                                   ),
-                                                  onPressed: () => Navigator.of(
-                                                          context)
-                                                      .push(MaterialPageRoute(
-                                                          builder: (BuildContext
-                                                                  context) =>
-                                                              NotesOpenPage(
-                                                                notesModel
-                                                                        .notes[
-                                                                    index],
-                                                                withEditing:
-                                                                    true,
-                                                              )))),
+                                                  onPressed: () {
+                                                    fToast
+                                                        .removeQueuedCustomToasts();
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder: (BuildContext
+                                                                    context) =>
+                                                                NotesOpenPage(
+                                                                  notesModel
+                                                                          .notes[
+                                                                      index],
+                                                                  withEditing:
+                                                                      true,
+                                                                )));
+                                                  }),
                                               FocusedMenuItem(
                                                   backgroundColor:
                                                       kBackgroungColor
@@ -190,13 +201,20 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                             context) {
                                                           return CustomDialogBox(
                                                               title:
-                                                                  "Are you sure you want to delete this note ?",
-                                                              onTapNegetive: () =>
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop(),
+                                                                  kDeleteConfirmationText,
+                                                              onTapNegetive:
+                                                                  () {
+                                                                fToast
+                                                                    .removeQueuedCustomToasts();
+
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                              },
                                                               onTapPositive:
                                                                   () {
+                                                                fToast
+                                                                    .removeQueuedCustomToasts();
                                                                 Provider.of<NotesModel>(
                                                                         context,
                                                                         listen:
@@ -283,7 +301,7 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                           TextOverflow.ellipsis,
                                                     ),
                                                   ),
-                                                  SizedBox(height: 8.toHeight),
+                                                  SizedBox(height: 10.toHeight),
                                                   Container(
                                                     child: Expanded(
                                                         child: ShaderMask(
@@ -295,8 +313,13 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                               .topCenter,
                                                           end: Alignment
                                                               .bottomCenter,
-                                                          stops: [0.4, 1.0],
+                                                          stops: [
+                                                            0.2,
+                                                            0.6,
+                                                            1.0
+                                                          ],
                                                           colors: [
+                                                            Colors.black,
                                                             Colors.black,
                                                             Colors.transparent,
                                                           ],
@@ -422,5 +445,12 @@ class _NotesHomePageState extends State<NotesHomePage> {
                 ),
               ))),
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    fToast.removeQueuedCustomToasts();
+    super.dispose();
   }
 }
