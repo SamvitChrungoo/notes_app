@@ -3,7 +3,7 @@ import 'package:notes_app/constants/constant_colors.dart';
 import 'package:notes_app/constants/icons/notes_icons.dart';
 import 'package:notes_app/model/notes.dart';
 import 'package:notes_app/provider/notes_model.dart';
-import 'package:notes_app/widgets/cutom_dailog.dart';
+import 'package:notes_app/widgets/custom_dailog.dart';
 import 'package:notes_app/utils/size_config.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';

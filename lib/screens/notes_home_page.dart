@@ -11,7 +11,7 @@ import 'package:notes_app/screens/add_new_note_page.dart';
 import 'package:notes_app/constants/constants.dart';
 import 'package:notes_app/constants/icons/notes_icons.dart';
 import 'package:notes_app/screens/search_page.dart';
-import 'package:notes_app/widgets/cutom_dailog.dart';
+import 'package:notes_app/widgets/custom_dailog.dart';
 import 'package:notes_app/widgets/notes_button.dart';
 import 'package:notes_app/screens/notes_open_page.dart';
 import 'package:notes_app/utils/helpers.dart';
