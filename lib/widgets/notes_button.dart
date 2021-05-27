@@ -26,15 +26,19 @@ class NotesButton extends StatelessWidget {
         HapticFeedback.lightImpact();
         onTap();
       },
-      child: Container(
-          padding: EdgeInsets.only(bottom: 2.toHeight),
-          height: height,
-          width: width,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              color: kButtonColor,
-              borderRadius: BorderRadius.all(Radius.circular(borderRadius))),
-          child: icon),
+      child: Material(
+        elevation: 10,
+        color: Colors.transparent,
+        child: Container(
+            padding: EdgeInsets.only(bottom: 2.toHeight),
+            height: height,
+            width: width,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: kButtonColor,
+                borderRadius: BorderRadius.all(Radius.circular(borderRadius))),
+            child: icon),
+      ),
     );
   }
 }
