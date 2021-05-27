@@ -5,6 +5,7 @@ import 'package:notes_app/model/notes.dart';
 import 'package:notes_app/provider/notes_model.dart';
 import 'package:notes_app/utils/helpers.dart';
 import 'package:notes_app/widgets/custom_dailog.dart';
+import 'package:notes_app/widgets/gradient_list.dart';
 import 'package:notes_app/widgets/notes_button.dart';
 import 'package:notes_app/utils/size_config.dart';
 import 'package:notes_app/widgets/remove_glow.dart';
@@ -91,118 +92,86 @@ class _NotesOpenPageState extends State<NotesOpenPage> {
           style: kNotesDefaultTextStyle,
           child: SafeArea(
               bottom: false,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.toWidth),
-                child: ScrollConfiguration(
-                  behavior: RemoveGlowBehavior(),
-                  child: ListView(
-                    children: [
-                      SizedBox(height: 20.toHeight),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          NotesButton(
-                              onTap: () => Navigator.of(context).pop(),
-                              icon: Icon(NotesIcons.noteBack,
-                                  color: kTextColor, size: 18.toFont)),
-                          Row(
-                            children: [
-                              NotesButton(
-                                  onTap: () {
-                                    shareNote(
-                                        '${widget.currentNote.title}\n${widget.currentNote.content}');
-                                  },
-                                  icon: Icon(NotesIcons.noteShare,
-                                      color: kTextColor, size: 18.toFont)),
-                              SizedBox(width: 10.toWidth),
-                              NotesButton(
-                                  onTap: () => showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return CustomDialogBox(
-                                            title: kDeleteConfirmationText,
-                                            onTapNegetive: () =>
-                                                Navigator.of(context).pop(),
-                                            onTapPositive: () {
-                                              Provider.of<NotesModel>(context,
-                                                      listen: false)
-                                                  .deleteNote(
-                                                      widget.currentNote.id);
-                                              Navigator.of(context).pop();
-                                              Navigator.of(context).pop();
-                                              if (widget.fromSearch) {
-                                                widget.isDeleted(true);
-                                              }
-                                            });
-                                      }),
-                                  icon: Icon(NotesIcons.noteDelete,
-                                      color: kTextColor, size: 18.toFont)),
-                              SizedBox(width: 10.toWidth),
-                              startEditing
-                                  ? SizedBox()
-                                  : NotesButton(
-                                      onTap: !startEditing
-                                          ? () async {
-                                              setState(() {
-                                                startEditing = true;
-                                              });
-                                              await Future.delayed(
-                                                  Duration(milliseconds: 500));
-                                              _titleTextFieldFocusNode
-                                                  .requestFocus();
-                                            }
-                                          : () {},
-                                      icon: Icon(NotesIcons.noteEdit,
-                                          color: kTextColor, size: 18.toFont)),
-                            ],
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 20.toHeight),
-                      Container(
-                          child: TextField(
-                        onChanged: (value) => setState(() {}),
-                        focusNode: _titleTextFieldFocusNode,
-                        maxLines: null,
-                        enabled: startEditing,
-                        style: kNotesDefaultHeadingStyle.copyWith(
-                            fontSize: 30.toFont, color: kTextColor),
-                        controller: _editHeadingController,
-                        cursorColor: kTextColor,
-                        decoration: InputDecoration(
-                          border: kNoInputBorder,
-                          focusedBorder: kNoInputBorder,
-                          enabledBorder: kNoInputBorder,
-                          errorBorder: kNoInputBorder,
-                          disabledBorder: kNoInputBorder,
-                        ),
-                      )),
-                      SizedBox(height: 10.toHeight),
-                      !startEditing
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+              child: GradientList(
+                backgroundColor: kBackgroungColor,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.toWidth),
+                  child: ScrollConfiguration(
+                    behavior: RemoveGlowBehavior(),
+                    child: ListView(
+                      children: [
+                        SizedBox(height: 20.toHeight),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            NotesButton(
+                                onTap: () => Navigator.of(context).pop(),
+                                icon: Icon(NotesIcons.noteBack,
+                                    color: kTextColor, size: 18.toFont)),
+                            Row(
                               children: [
-                                Container(
-                                  height: 20.toHeight,
-                                  child: Text(
-                                      DateFormat('MMMM d, y').format(
-                                          DateTime.tryParse(
-                                              widget.currentNote.updatedAt)),
-                                      style: kNotesDefaultTextStyle.copyWith(
-                                          color: kTextColor.withOpacity(0.6))),
-                                ),
-                                SizedBox(height: 10.toHeight),
+                                NotesButton(
+                                    onTap: () {
+                                      shareNote(
+                                          '${widget.currentNote.title}\n${widget.currentNote.content}');
+                                    },
+                                    icon: Icon(NotesIcons.noteShare,
+                                        color: kTextColor, size: 18.toFont)),
+                                SizedBox(width: 10.toWidth),
+                                NotesButton(
+                                    onTap: () => showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return CustomDialogBox(
+                                              title: kDeleteConfirmationText,
+                                              onTapNegetive: () =>
+                                                  Navigator.of(context).pop(),
+                                              onTapPositive: () {
+                                                Provider.of<NotesModel>(context,
+                                                        listen: false)
+                                                    .deleteNote(
+                                                        widget.currentNote.id);
+                                                Navigator.of(context).pop();
+                                                Navigator.of(context).pop();
+                                                if (widget.fromSearch) {
+                                                  widget.isDeleted(true);
+                                                }
+                                              });
+                                        }),
+                                    icon: Icon(NotesIcons.noteDelete,
+                                        color: kTextColor, size: 18.toFont)),
+                                SizedBox(width: 10.toWidth),
+                                startEditing
+                                    ? SizedBox()
+                                    : NotesButton(
+                                        onTap: !startEditing
+                                            ? () async {
+                                                setState(() {
+                                                  startEditing = true;
+                                                });
+                                                await Future.delayed(Duration(
+                                                    milliseconds: 500));
+                                                _titleTextFieldFocusNode
+                                                    .requestFocus();
+                                              }
+                                            : () {},
+                                        icon: Icon(NotesIcons.noteEdit,
+                                            color: kTextColor,
+                                            size: 18.toFont)),
                               ],
                             )
-                          : SizedBox(height: 30.toHeight),
-                      Container(
-                        child: TextField(
+                          ],
+                        ),
+                        SizedBox(height: 20.toHeight),
+                        Container(
+                            child: TextField(
+                          onChanged: (value) => setState(() {}),
+                          focusNode: _titleTextFieldFocusNode,
                           maxLines: null,
                           enabled: startEditing,
-                          onChanged: (value) => setState(() {}),
                           style: kNotesDefaultHeadingStyle.copyWith(
-                              fontSize: 20.toFont, color: kTextColor),
-                          controller: _editContentController,
+                              fontSize: 30.toFont, color: kTextColor),
+                          controller: _editHeadingController,
                           cursorColor: kTextColor,
                           decoration: InputDecoration(
                             border: kNoInputBorder,
@@ -211,9 +180,46 @@ class _NotesOpenPageState extends State<NotesOpenPage> {
                             errorBorder: kNoInputBorder,
                             disabledBorder: kNoInputBorder,
                           ),
+                        )),
+                        SizedBox(height: 10.toHeight),
+                        !startEditing
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 20.toHeight,
+                                    child: Text(
+                                        DateFormat('MMMM d, y').format(
+                                            DateTime.tryParse(
+                                                widget.currentNote.updatedAt)),
+                                        style: kNotesDefaultTextStyle.copyWith(
+                                            color:
+                                                kTextColor.withOpacity(0.6))),
+                                  ),
+                                  SizedBox(height: 10.toHeight),
+                                ],
+                              )
+                            : SizedBox(height: 30.toHeight),
+                        Container(
+                          child: TextField(
+                            maxLines: null,
+                            enabled: startEditing,
+                            onChanged: (value) => setState(() {}),
+                            style: kNotesDefaultHeadingStyle.copyWith(
+                                fontSize: 20.toFont, color: kTextColor),
+                            controller: _editContentController,
+                            cursorColor: kTextColor,
+                            decoration: InputDecoration(
+                              border: kNoInputBorder,
+                              focusedBorder: kNoInputBorder,
+                              enabledBorder: kNoInputBorder,
+                              errorBorder: kNoInputBorder,
+                              disabledBorder: kNoInputBorder,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ))),
