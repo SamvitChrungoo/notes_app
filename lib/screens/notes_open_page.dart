@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:notes_app/constants/icons/notes_icons.dart';
 import 'package:notes_app/model/notes.dart';
@@ -69,6 +70,7 @@ class _NotesOpenPageState extends State<NotesOpenPage> {
               _editContentController.text != initialContent && startEditing)
           ? FloatingActionButton.extended(
               onPressed: () {
+                HapticFeedback.lightImpact();
                 var updatedNote = widget.currentNote.copyWith(
                     title: _editHeadingController.text,
                     content: _editContentController.text,

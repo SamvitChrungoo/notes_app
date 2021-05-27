@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:notes_app/constants/constant_colors.dart';
 import 'package:notes_app/constants/constants.dart';
 import 'package:notes_app/utils/size_config.dart';
@@ -60,7 +61,10 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                         children: [
                           Expanded(
                             child: InkWell(
-                              onTap: () => widget.onTapNegetive(),
+                              onTap: () {
+                                HapticFeedback.lightImpact();
+                                widget.onTapNegetive();
+                              },
                               child: Container(
                                   decoration: BoxDecoration(
                                     border: Border(
@@ -76,7 +80,10 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                           ),
                           Expanded(
                             child: InkWell(
-                              onTap: () => widget.onTapPositive(),
+                              onTap: () {
+                                HapticFeedback.lightImpact();
+                                widget.onTapPositive();
+                              },
                               child: Container(
                                   decoration: BoxDecoration(
                                     border: Border(

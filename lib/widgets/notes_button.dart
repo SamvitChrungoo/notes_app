@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:notes_app/constants/constant_colors.dart';
 import 'package:notes_app/utils/size_config.dart';
 
@@ -21,7 +22,10 @@ class NotesButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap(),
+      onTap: () {
+        HapticFeedback.lightImpact();
+        onTap();
+      },
       child: Container(
           padding: EdgeInsets.only(bottom: 2.toHeight),
           height: height,

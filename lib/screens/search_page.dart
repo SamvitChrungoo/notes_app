@@ -1,5 +1,6 @@
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:focused_menu/focused_menu.dart';
@@ -189,29 +190,35 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
                                                   NotesIcons.noteEdit,
                                                   color: kTextColor,
                                                 ),
-                                                onPressed: () => Navigator.of(
-                                                        context)
-                                                    .push(MaterialPageRoute(
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                            NotesOpenPage(
-                                                              searchResults[
-                                                                  index],
-                                                              withEditing: true,
-                                                              fromSearch: true,
-                                                              isDeleted: (val) {
-                                                                if (val) {
-                                                                  searchResults
-                                                                      .removeAt(
-                                                                          index);
-                                                                }
-                                                              },
-                                                              isEdited: (val) {
+                                                onPressed: () {
+                                                  HapticFeedback.lightImpact();
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (BuildContext
+                                                                  context) =>
+                                                              NotesOpenPage(
                                                                 searchResults[
-                                                                        index] =
-                                                                    val;
-                                                              },
-                                                            )))),
+                                                                    index],
+                                                                withEditing:
+                                                                    true,
+                                                                fromSearch:
+                                                                    true,
+                                                                isDeleted:
+                                                                    (val) {
+                                                                  if (val) {
+                                                                    searchResults
+                                                                        .removeAt(
+                                                                            index);
+                                                                  }
+                                                                },
+                                                                isEdited:
+                                                                    (val) {
+                                                                  searchResults[
+                                                                          index] =
+                                                                      val;
+                                                                },
+                                                              )));
+                                                }),
                                             FocusedMenuItem(
                                                 backgroundColor:
                                                     kBackgroungColor
@@ -224,6 +231,7 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
                                                   color: kTextColor,
                                                 ),
                                                 onPressed: () {
+                                                  HapticFeedback.lightImpact();
                                                   shareNote(
                                                       '${searchResults[index].title}\n${searchResults[index].content}');
                                                 }),
@@ -241,6 +249,7 @@ class _NotesSearchPageState extends State<NotesSearchPage> {
                                                   color: Colors.redAccent,
                                                 ),
                                                 onPressed: () {
+                                                  HapticFeedback.lightImpact();
                                                   showDialog(
                                                       context: context,
                                                       builder: (BuildContext

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:notes_app/constants/constant_colors.dart';
 import 'package:notes_app/constants/icons/notes_icons.dart';
 import 'package:notes_app/model/notes.dart';
@@ -39,6 +40,7 @@ class _AddNewNoteState extends State<AddNewNote> {
               _noteBodyController.text.isNotEmpty)
           ? FloatingActionButton.extended(
               onPressed: () {
+                HapticFeedback.lightImpact();
                 var newNote = Note(
                     _uniqueId.v1(),
                     DateTime.now().toString(),

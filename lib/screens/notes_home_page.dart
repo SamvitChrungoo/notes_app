@@ -1,6 +1,7 @@
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focused_menu/focused_menu.dart';
@@ -67,6 +68,7 @@ class _NotesHomePageState extends State<NotesHomePage> {
       backgroundColor: kBackgroungColor,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          HapticFeedback.lightImpact();
           fToast.removeQueuedCustomToasts();
           Navigator.of(context).push(MaterialPageRoute(
               builder: (BuildContext context) => AddNewNote()));
@@ -162,6 +164,8 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                         color: kTextColor,
                                                       ),
                                                       onPressed: () {
+                                                        HapticFeedback
+                                                            .lightImpact();
                                                         fToast
                                                             .removeQueuedCustomToasts();
                                                         Navigator.of(context).push(
@@ -188,6 +192,8 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                         color: kTextColor,
                                                       ),
                                                       onPressed: () {
+                                                        HapticFeedback
+                                                            .lightImpact();
                                                         shareNote(
                                                             '${notesModel.notes[index].title}\n${notesModel.notes[index].content}');
                                                       }),
@@ -205,6 +211,8 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                         color: Colors.redAccent,
                                                       ),
                                                       onPressed: () {
+                                                        HapticFeedback
+                                                            .lightImpact();
                                                         showDialog(
                                                             context: context,
                                                             builder:
@@ -380,6 +388,8 @@ class _NotesHomePageState extends State<NotesHomePage> {
                                                           children: [
                                                             InkWell(
                                                               onTap: () {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 Note
                                                                     updatedNote =
                                                                     notesModel.notes[
